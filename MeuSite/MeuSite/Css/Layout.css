@@ -1,0 +1,58 @@
+﻿.saida {
+    position:absolute;
+    left: 90%;
+    float: left;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 20px;
+    color:rgb(175, 161, 161);
+}
+
+a:link, a:visited {
+	text-decoration: none;
+
+	}
+a:hover {
+	text-decoration: underline; 
+
+    background-color: white;
+	}
+a:active {
+	text-decoration: none;
+	}
+.rodape{
+	position: absolute;
+	top: 90%;
+    left: 1%;
+	width: 98%;
+	height: 8%;
+    color: white;
+    font-size: 10px;
+    text-align: center;
+	background-color: black;
+}
+.body{
+    background-color: #111347;
+    color: black;
+} 
+.fundo {
+    position: absolute;
+    top: 8%;
+    left: 2%;
+    width: 96%;
+    height: 82%;
+    background-color: rgb(54, 90, 73);
+    overflow: scroll;
+    /*background-image: url('../Imagens/Técnico-em-Eletrônica1.jpg');*/
+}
+.rodape{
+	position: absolute;
+	top: 90%;
+    left: 1%;
+	width: 98%;
+	height: 8%;
+    color: white;
+    font-size: 10px;
+    text-align: center;
+	background-color: black;
+}

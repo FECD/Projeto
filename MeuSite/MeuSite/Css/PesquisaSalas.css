@@ -1,0 +1,11 @@
+﻿.submenu{
+    color: white;
+    background-color: rgba(106, 219, 43, 0.49);
+    border: 2px solid white;
+    border-radius: 12px;
+}
+.tabSUb{
+    background-color: rgba(106, 151, 81, 1);
+    /*border: 2px solid white;*/
+    border-radius: 12px;
+}

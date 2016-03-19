@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="body">
+    
+        <div class="row">
+            <div class="opcoes1">
+                <h2>Perfil</h2>
+                <p>
+                    Entre em perfil para atualizar suas informações!
+                </p>
+                <p>@Html.ActionLink("Perfil", "Perfil", "Home", new { @class = "btn corBut btn-lg" })</p>
+            </div>
+            <div class="opcoes2">
+                <h2>Salas</h2>
+                <p>Entre em salas para procurar novas salas, acessar suas salas ou criar uma nova sala!</p>
+                <p>@Html.ActionLink("Salas", "SuasSalas", "Home", new { @class = "btn corBut btn-lg" })</p>
+            </div>
+            <div class="opcoes3">
+                <h2>ED</h2>
+                <p>Duvidas sobre o site?
+                Saiba mais sobre o nosso projeto!</p>
+                <p>@Html.ActionLink("Informações", "Sobre", "Home", new { @class = "btn corBut btn-lg" })</p>
+            </div>
+        </div>
+</body>
+</html>

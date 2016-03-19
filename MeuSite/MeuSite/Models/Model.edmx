@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="edbancoModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="arquivobiblioteca">
+          <Key>
+            <PropertyRef Name="idarquivoBiblioteca" />
+            <PropertyRef Name="idTemaSala" />
+          </Key>
+          <Property Name="idarquivoBiblioteca" Type="int" Nullable="false" />
+          <Property Name="idTemaSala" Type="int" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="conteudo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="arquivotarefa">
+          <Key>
+            <PropertyRef Name="idArquivoTarefa" />
+            <PropertyRef Name="idArquivoBiblioteca" />
+          </Key>
+          <Property Name="idArquivoTarefa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idArquivoBiblioteca" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="chat">
+          <Key>
+            <PropertyRef Name="idSala" />
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idSala" Type="int" Nullable="false" />
+          <Property Name="idUsuario" Type="int" Nullable="false" />
+          <Property Name="numero" Type="int" Nullable="false" />
+          <Property Name="mensagem" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sala">
+          <Key>
+            <PropertyRef Name="idsala" />
+            <PropertyRef Name="idTemaSala" />
+          </Key>
+          <Property Name="idsala" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idTemaSala" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Descrecao" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="tarefa">
+          <Key>
+            <PropertyRef Name="idtarefa" />
+            <PropertyRef Name="idSala" />
+          </Key>
+          <Property Name="idtarefa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idSala" Type="int" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="dataEntrega" Type="date" Nullable="false" />
+          <Property Name="entregue" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="temasala">
+          <Key>
+            <PropertyRef Name="idTemaSala" />
+          </Key>
+          <Property Name="idTemaSala" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idusuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="senha" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="conexao" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuariosala">
+          <Key>
+            <PropertyRef Name="idSala" />
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idSala" Type="int" Nullable="false" />
+          <Property Name="idUsuario" Type="int" Nullable="false" />
+          <Property Name="proprietario" Type="bool" Nullable="false" />
+          <Property Name="acessopermitido" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="edbancoModelStoreContainer">
+          <EntitySet Name="arquivobiblioteca" EntityType="Self.arquivobiblioteca" Schema="edbanco" store:Type="Tables" />
+          <EntitySet Name="arquivotarefa" EntityType="Self.arquivotarefa" Schema="edbanco" store:Type="Tables" />
+          <EntitySet Name="chat" EntityType="Self.chat" Schema="edbanco" store:Type="Tables" />
+          <EntitySet Name="sala" EntityType="Self.sala" Schema="edbanco" store:Type="Tables" />
+          <EntitySet Name="tarefa" EntityType="Self.tarefa" Schema="edbanco" store:Type="Tables" />
+          <EntitySet Name="temasala" EntityType="Self.temasala" Schema="edbanco" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="edbanco" store:Type="Tables" />
+          <EntitySet Name="usuariosala" EntityType="Self.usuariosala" Schema="edbanco" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="edbancoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="arquivobiblioteca">
+          <Key>
+            <PropertyRef Name="idarquivoBiblioteca" />
+            <PropertyRef Name="idTemaSala" />
+          </Key>
+          <Property Name="idarquivoBiblioteca" Type="Int32" Nullable="false" />
+          <Property Name="idTemaSala" Type="Int32" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="conteudo" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="arquivotarefa">
+          <Key>
+            <PropertyRef Name="idArquivoTarefa" />
+            <PropertyRef Name="idArquivoBiblioteca" />
+          </Key>
+          <Property Name="idArquivoTarefa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idArquivoBiblioteca" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="chat">
+          <Key>
+            <PropertyRef Name="idSala" />
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idSala" Type="Int32" Nullable="false" />
+          <Property Name="idUsuario" Type="Int32" Nullable="false" />
+          <Property Name="numero" Type="Int32" Nullable="false" />
+          <Property Name="mensagem" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sala">
+          <Key>
+            <PropertyRef Name="idsala" />
+            <PropertyRef Name="idTemaSala" />
+          </Key>
+          <Property Name="idsala" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idTemaSala" Type="Int32" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descrecao" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tarefa">
+          <Key>
+            <PropertyRef Name="idtarefa" />
+            <PropertyRef Name="idSala" />
+          </Key>
+          <Property Name="idtarefa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idSala" Type="Int32" Nullable="false" />
+          <Property Name="titulo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dataEntrega" Type="DateTime" Nullable="false" />
+          <Property Name="entregue" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="temasala">
+          <Key>
+            <PropertyRef Name="idTemaSala" />
+          </Key>
+          <Property Name="idTemaSala" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="idusuario" />
+          </Key>
+          <Property Name="idusuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="senha" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="conexao" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuariosala">
+          <Key>
+            <PropertyRef Name="idSala" />
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idSala" Type="Int32" Nullable="false" />
+          <Property Name="idUsuario" Type="Int32" Nullable="false" />
+          <Property Name="proprietario" Type="Boolean" Nullable="false" />
+          <Property Name="acessopermitido" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="edbancoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="arquivobiblioteca" EntityType="Self.arquivobiblioteca" />
+          <EntitySet Name="arquivotarefa" EntityType="Self.arquivotarefa" />
+          <EntitySet Name="chat" EntityType="Self.chat" />
+          <EntitySet Name="sala" EntityType="Self.sala" />
+          <EntitySet Name="tarefa" EntityType="Self.tarefa" />
+          <EntitySet Name="temasala" EntityType="Self.temasala" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <EntitySet Name="usuariosala" EntityType="Self.usuariosala" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="edbancoModelStoreContainer" CdmEntityContainer="edbancoEntities">
+          <EntitySetMapping Name="arquivobiblioteca">
+            <EntityTypeMapping TypeName="edbancoModel.arquivobiblioteca">
+              <MappingFragment StoreEntitySet="arquivobiblioteca">
+                <ScalarProperty Name="idarquivoBiblioteca" ColumnName="idarquivoBiblioteca" />
+                <ScalarProperty Name="idTemaSala" ColumnName="idTemaSala" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="conteudo" ColumnName="conteudo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="arquivotarefa">
+            <EntityTypeMapping TypeName="edbancoModel.arquivotarefa">
+              <MappingFragment StoreEntitySet="arquivotarefa">
+                <ScalarProperty Name="idArquivoTarefa" ColumnName="idArquivoTarefa" />
+                <ScalarProperty Name="idArquivoBiblioteca" ColumnName="idArquivoBiblioteca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chat">
+            <EntityTypeMapping TypeName="edbancoModel.chat">
+              <MappingFragment StoreEntitySet="chat">
+                <ScalarProperty Name="idSala" ColumnName="idSala" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="mensagem" ColumnName="mensagem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sala">
+            <EntityTypeMapping TypeName="edbancoModel.sala">
+              <MappingFragment StoreEntitySet="sala">
+                <ScalarProperty Name="idsala" ColumnName="idsala" />
+                <ScalarProperty Name="idTemaSala" ColumnName="idTemaSala" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Descrecao" ColumnName="Descrecao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tarefa">
+            <EntityTypeMapping TypeName="edbancoModel.tarefa">
+              <MappingFragment StoreEntitySet="tarefa">
+                <ScalarProperty Name="idtarefa" ColumnName="idtarefa" />
+                <ScalarProperty Name="idSala" ColumnName="idSala" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="dataEntrega" ColumnName="dataEntrega" />
+                <ScalarProperty Name="entregue" ColumnName="entregue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="temasala">
+            <EntityTypeMapping TypeName="edbancoModel.temasala">
+              <MappingFragment StoreEntitySet="temasala">
+                <ScalarProperty Name="idTemaSala" ColumnName="idTemaSala" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="edbancoModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="senha" ColumnName="senha" />
+                <ScalarProperty Name="conexao" ColumnName="conexao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuariosala">
+            <EntityTypeMapping TypeName="edbancoModel.usuariosala">
+              <MappingFragment StoreEntitySet="usuariosala">
+                <ScalarProperty Name="idSala" ColumnName="idSala" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="proprietario" ColumnName="proprietario" />
+                <ScalarProperty Name="acessopermitido" ColumnName="acessopermitido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

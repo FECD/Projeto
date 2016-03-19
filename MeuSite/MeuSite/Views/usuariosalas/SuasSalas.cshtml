@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MeuSite.Models.sala>
+
+@{
+    ViewBag.Title = "SuasSalas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Css/SuasSalas.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        @{
+            int idusu = ViewBag.mensagem;
+        }
+        <div class="vertucalMenu">
+            <h4>Salas</h4>
+            <p>@Html.ActionLink("Pesquisar", "Pesquisa", "salas", new { @class = "btn corBut btn-lg" })</p>
+            <p>@Html.ActionLink("Criar", "CriarSala", "salas", new { @class = "btn corBut btn-lg" })</p>
+        </div>
+        <div class="tituloGE">Salas Gerenciadas</div>
+        <div class="tabelaSala">
+            <table>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="itensSala">
+                                <p>@Html.ActionLink(@item.Nome, "Salas", new { id = item.idsala, usu = idusu })</p>
+                                <p>@item.Descrecao</p>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="tituloPA">Salas Participantes</div>
+        <div class="tabelaSalaPA">
+            <table>
+
+                <tr>
+                    <td>
+                        <div class="itensSala">
+
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+
+            </table>
+        </div>
+
+
+
+    </div>
+</body>
+</html>

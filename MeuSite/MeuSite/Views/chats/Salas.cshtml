@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MeuSite.Models.chat>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Salas</title>
+</head>
+<body>
+    <table>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.numero)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.mensagem)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.numero)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.mensagem)
+            </td>
+        </tr>
+    }
+    
+    </table>
+
+    <input name="mensagem"/>
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Entrar" class="btn btn-default" />
+    </div>
+
+</body>
+</html>

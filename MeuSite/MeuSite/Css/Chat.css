@@ -1,0 +1,10 @@
+﻿.chat {
+    position:absolute;
+    left: 60%;
+    width:20%;
+    height:140px;
+    background-color:green; 
+    overflow:scroll; 
+    overflow-x:hidden;
+}
+
