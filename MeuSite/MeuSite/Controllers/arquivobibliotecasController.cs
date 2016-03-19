@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MeuSite.Models;
+using System.IO;
 
 namespace MeuSite.Controllers
 {
@@ -46,10 +47,19 @@ namespace MeuSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idarquivoBiblioteca,idTemaSala,nome,conteudo")] arquivobiblioteca arquivobiblioteca)
+        public ActionResult Create([Bind(Include = "idarquivoBiblioteca,idTemaSala,nome,conteudo,privacidade")] arquivobiblioteca arquivobiblioteca, HttpPostedFileBase file)
         {
+            ViewBag.id = TempData["IDSALA"];
+            sala sala = db.sala.ToList().Find(item => item.idsala == ViewBag.id);
+            TempData["IDSALA"] = ViewBag.id;
             if (ModelState.IsValid)
             {
+                var fileName = Path.GetFileName(file.FileName.ToString());
+                var path = Path.Combine(Server.MapPath("~/Arquivos/Biblioteca"), fileName);
+                file.SaveAs(path);
+                path = Url.Content(Path.Combine("~/Arquivos/Biblioteca", fileName));
+                arquivobiblioteca.conteudo = path;
+                arquivobiblioteca.idTemaSala = sala.idTemaSala;
                 db.arquivobiblioteca.Add(arquivobiblioteca);
                 db.SaveChanges();
                 return RedirectToAction("Index");

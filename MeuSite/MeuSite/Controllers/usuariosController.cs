@@ -22,21 +22,31 @@ namespace MeuSite.Controllers
         [HttpPost]
         public ActionResult Entrar([Bind(Include = "email,senha")] usuario usuario)
         {
-            foreach (var item in db.usuario.ToList())
+            usuario useencontrado = db.usuario.ToList().Find(s => s.email == usuario.email);
+            if (useencontrado.senha == usuario.senha)
             {
-                if (item.email == usuario.email)
-                {
-                    if (item.senha == usuario.senha)
-                    {
-                        usuario novo = item;
-                        novo.conexao = true;
-                        db.Entry(novo).State = EntityState.Modified;
-                        db.SaveChanges();
-                        TempData["Email"] = item.email;
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
+                usuario novo = useencontrado;
+                novo.conexao = true;
+                db.Entry(novo).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["Email"] = novo.email;
+                return RedirectToAction("Index", "Home");
             }
+            //foreach (var item in )
+            //{
+            //    if (item.email == usuario.email)
+            //    {
+            //        if (item.senha == usuario.senha)
+            //        {
+            //            usuario novo = item;
+            //            novo.conexao = true;
+            //            db.Entry(novo).State = EntityState.Modified;
+            //            db.SaveChanges();
+            //            TempData["Email"] = item.email;
+            //            return RedirectToAction("Index", "Home");
+            //        }
+            //    }
+            //}
 
             return View();
         }
@@ -95,13 +105,14 @@ namespace MeuSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idusuario,nome,email,senha,conexao")] usuario usuario)
+        public ActionResult Create([Bind(Include = "idusuario,nome,email,senha")] usuario usuario)
         {
             if (ModelState.IsValid)
             {
+                usuario.conexao = false;
                 db.usuario.Add(usuario);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Entrar", "usuarios");
             }
 
             return View(usuario);
@@ -127,13 +138,14 @@ namespace MeuSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idusuario,nome,email,senha,conexao")] usuario usuario)
+        public ActionResult Edit([Bind(Include = "idusuario,nome,email,senha")] usuario usuario)
         {
             if (ModelState.IsValid)
             {
+                usuario.conexao = true;
                 db.Entry(usuario).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Perfil", "usuarios");
             }
             return View(usuario);
         }

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<MeuSite.Models.sala>
+﻿@model MeuSite.Models.sala
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Pesquisando salas";
     Layout = "~/Views/Shared/_Layout.cshtml";
     
 }
@@ -11,10 +11,18 @@
     @using MeuSite.Models;
 </head>
 <body>
-    @using (Html.BeginForm())
+    @{
+        //edbancoEntities db = new edbancoEntities();
+        @*if (ViewBag.info != null){
+            <div>@ViewBag.info</div>
+        }*@
+        
+    }
+
+    @using (Html.BeginForm("Filtrar", "salas", FormMethod.Post))
     {
 
-        sala obj = new sala();
+        //sala obj = new sala();
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <table class="tabSUb">
@@ -23,8 +31,17 @@
                         <div class="form-group">
                             <div class="col-md-10 submenu">
                                 Filtrar por Tema
-                                @Html.DropDownList("idTemaSala", null, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => obj.idTemaSala, "", new { @class = "text-danger" })
+                                @*<select name="idtemasala" form="carform">
+                                    <option value=0> Todos </option>
+                                    @foreach (var item in Model.)
+                                    {
+                                        <option value=@item.idTemaSala>@item.nome</option>
+                                    }
+                                </select>*@
+
+                                @*@Html.DropDownList("IdTemaSala", null ,htmlAttributes: new { @class = "form-control" })*@
+                                @*@Html.DropDownList("idTemaSala", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => obj.idTemaSala, "", new { @class = "text-danger" })*@
                             </div>
                         </div>
                     </td>
@@ -32,8 +49,9 @@
                         <div class="form-group">
                             <div class="col-md-10 submenu">
                                 Filtrar por Nome
-                                @Html.EditorFor(model => obj.Nome, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => obj.Nome, "", new { @class = "text-danger" })
+                                <input type="text" name="Nome" class="alert-danger" />
+                                @*@Html.EditorFor(model => obj.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => obj.Nome, "", new { @class = "text-danger" })*@
                             </div>
                         </div>
                     </td>
@@ -52,7 +70,7 @@
     <p>
         <input type="submit" value="Restaurar" class="btn btn-default" />
     </p>
-    <h2 style="background-color:white; text-align:center">Salas</h2>
+    @*<h2 style="background-color:white; text-align:center">Salas</h2>
     <div style="background-color:white; overflow: scroll; height:50%; width:60%;">
         <table class="table">
             <tr>
@@ -68,32 +86,26 @@
                 <th></th>
             </tr>
 
-            @{
-                edbancoEntities db = new edbancoEntities();
-                foreach (var item in Model) { 
+            @foreach (var item in Model.listaSalas) {
             
-                
-                
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Nome)
                     </td>
                     <td>
-                        @Html.DisplayName(db.temasala.Find(item.idTemaSala).nome)
+                        @Html.DisplayName(Model.listaTemas.Find(s => s.idTemaSala == item.idTemaSala).nome)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Descrecao)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        
                     </td>
                 </tr>
             }
             }
 
         </table>
-    </div>
+    </div>*@
 </body>
 </html>

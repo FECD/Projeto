@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MeuSite.Models;
+using MeuSite.Classes;
 
 namespace MeuSite.Controllers
 {
@@ -15,21 +16,43 @@ namespace MeuSite.Controllers
         private edbancoEntities db = new edbancoEntities();
 
         // GET: usuariosalas
-        public ActionResult Salas(int? id, int? usu)
+        public ActionResult Salas(int id, int usu, Boolean gerencia)
         {
+
             ViewBag.acesso = TempData["Acesso"];
+            TarefaChat lista = new TarefaChat();
             List<chat> listaCH = new List<chat>();
-            foreach (var item in db.chat.ToList())
+            List<tarefa> listaTa = new List<tarefa>();
+            if (id != null)
             {
-                if (item.idSala == id)
-                {
-                    listaCH.Add(item);
-                }
+                listaCH = db.chat.ToList().FindAll(item => item.idSala == id);
+                listaTa = db.tarefa.ToList().FindAll(item => item.idSala == id);
             }
+            //foreach (var item in db.chat.ToList().)
+            //{
+            //    if (item.idSala == id)
+            //    {
+            //        listaCH.Add(item);
+            //    }
+            //}
+
+            lista.listatarefas = listaTa;
+            lista.listachat = listaCH;
+            lista.idSala = id;
             ViewBag.id = id;
             ViewBag.usuario = usu;
             TempData["Acesso"] = ViewBag.acesso;
-            return View(listaCH);
+            return View(lista);
+        }
+        public ActionResult Tarefas(int id)
+        {
+            TempData["IDSALA"] = id;
+            return RedirectToAction("Create", "tarefas");
+        }
+        public ActionResult Arquivos(int id)
+        {
+            TempData["IDSALA"] = id;
+            return RedirectToAction("Create", "arquivobibliotecas");
         }
         public ActionResult SuasSalas()
         {

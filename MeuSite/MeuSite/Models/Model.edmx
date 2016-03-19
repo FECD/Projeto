@@ -10,10 +10,11 @@
             <PropertyRef Name="idarquivoBiblioteca" />
             <PropertyRef Name="idTemaSala" />
           </Key>
-          <Property Name="idarquivoBiblioteca" Type="int" Nullable="false" />
+          <Property Name="idarquivoBiblioteca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idTemaSala" Type="int" Nullable="false" />
           <Property Name="nome" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="conteudo" Type="bit" Nullable="false" />
+          <Property Name="conteudo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="privacidade" Type="bool" Nullable="false" />
         </EntityType>
         <EntityType Name="arquivotarefa">
           <Key>
@@ -25,9 +26,9 @@
         </EntityType>
         <EntityType Name="chat">
           <Key>
-            <PropertyRef Name="idSala" />
-            <PropertyRef Name="idUsuario" />
+            <PropertyRef Name="idChat" />
           </Key>
+          <Property Name="idChat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idSala" Type="int" Nullable="false" />
           <Property Name="idUsuario" Type="int" Nullable="false" />
           <Property Name="numero" Type="int" Nullable="false" />
@@ -101,10 +102,11 @@
             <PropertyRef Name="idarquivoBiblioteca" />
             <PropertyRef Name="idTemaSala" />
           </Key>
-          <Property Name="idarquivoBiblioteca" Type="Int32" Nullable="false" />
+          <Property Name="idarquivoBiblioteca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idTemaSala" Type="Int32" Nullable="false" />
           <Property Name="nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="conteudo" Type="Boolean" Nullable="false" />
+          <Property Name="conteudo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="privacidade" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="arquivotarefa">
           <Key>
@@ -116,9 +118,9 @@
         </EntityType>
         <EntityType Name="chat">
           <Key>
-            <PropertyRef Name="idSala" />
-            <PropertyRef Name="idUsuario" />
+            <PropertyRef Name="idChat" />
           </Key>
+          <Property Name="idChat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idSala" Type="Int32" Nullable="false" />
           <Property Name="idUsuario" Type="Int32" Nullable="false" />
           <Property Name="numero" Type="Int32" Nullable="false" />
@@ -195,6 +197,7 @@
                 <ScalarProperty Name="idTemaSala" ColumnName="idTemaSala" />
                 <ScalarProperty Name="nome" ColumnName="nome" />
                 <ScalarProperty Name="conteudo" ColumnName="conteudo" />
+                <ScalarProperty Name="privacidade" ColumnName="privacidade" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -209,6 +212,7 @@
           <EntitySetMapping Name="chat">
             <EntityTypeMapping TypeName="edbancoModel.chat">
               <MappingFragment StoreEntitySet="chat">
+                <ScalarProperty Name="idChat" ColumnName="idChat" />
                 <ScalarProperty Name="idSala" ColumnName="idSala" />
                 <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
                 <ScalarProperty Name="numero" ColumnName="numero" />

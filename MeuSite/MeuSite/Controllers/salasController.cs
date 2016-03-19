@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MeuSite.Models;
+using MeuSite.Classes;
 
 namespace MeuSite.Controllers
 {
@@ -18,8 +19,18 @@ namespace MeuSite.Controllers
         // GET: salas
         public ActionResult Index()
         {
-            ViewBag.idTemaSala = new SelectList(db.temasala, "idTemaSala", "nome");
-            return View(db.sala.ToList());
+            TemasESalas listas = new TemasESalas();
+            listas.listaTemas = db.temasala.ToList();
+            listas.listaSalas = db.sala.ToList();
+            return View(listas);
+        }
+        public ActionResult Filtrar(int idtemasala, string Nome)
+        {
+            ViewBag.Tema = idtemasala;
+            ViewBag.Nome = Nome;
+            return View();
+            //List<sala> listinha = sala.FindAll(s => s.Nome =="IF");
+            //return RedirectToAction("Index","salas");
         }
 
         // GET: salas/Details/5

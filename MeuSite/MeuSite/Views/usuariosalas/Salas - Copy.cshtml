@@ -1,0 +1,322 @@
+﻿@model IEnumerable<MeuSite.Models.chat>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Salas</title>
+    <link href="~/Css/Chat.css" rel="stylesheet" />
+    @using MeuSite.Models;
+    @using MeuSite.Controllers;
+    <script>
+    function start(k, tamanho) {
+        var body = document.getElementsByTagName("body")[0];
+        var div = document.getElementById("chat");
+        
+        var tbl = document.createElement("table");
+        var tblBody = document.createElement("tbody");
+        var Nsala;
+        var Nusuario;
+        var Num;
+        var MinhaMensagem;
+        var por = '';
+        var cont = 0;
+        for (var item = 0; item < tamanho ; item++) {
+            if (k[item] != '|'){
+                por += k[item];
+            }
+            else {
+                if (cont == 0) {
+                    Nsala = por;
+                    cont += 1;
+                    por = ''
+                }
+                else {
+                    if (cont == 1) {
+                    Nusuario = por;
+                    cont += 1;
+                    por = ''
+                    }
+                    else{
+                        if (cont == 2) {
+                            Num = por;
+                            cont += 1;
+                            por = ''
+                        }
+                        else{
+                            if (cont == 3) {
+                                MinhaMensagem = por;
+                                cont = 0;
+                                por = ''
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        for (var j = 0; j < 1; j++) {
+
+            var row = document.createElement("tr");
+            for (var i = 0; i < 2; i++) {
+
+                if (i == 0) {
+                    var cell = document.createElement("th");
+                    var cellText = document.createTextNode(Nusuario);
+                }
+                else {
+                    var cell = document.createElement("td");
+                    var cellText = document.createTextNode(MinhaMensagem);
+                }
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            }
+            tblBody.appendChild(row);
+        }
+        tbl.appendChild(tblBody);
+        div.appendChild(tbl);
+        tbl.setAttribute("border", "1");
+    }
+    function startIN(k, tamanho, comprimento) {
+        var body = document.getElementsByTagName("body")[0];
+        var div = document.getElementById("chat");
+
+        var tbl = document.createElement("table");
+        var tblBody = document.createElement("tbody");
+        var Nsala;
+        var Nusuario;
+        var Num;
+        var MinhaMensagem;
+        var por = '';
+        var cont = 0;
+        for (var item = 0; item < tamanho ; item++) {
+            if (k[item] != '|') {
+                por += k[item];
+            }
+            else {
+                if (cont == 0) {
+                    Nsala = por;
+                    cont += 1;
+                    por = ''
+                }
+                else {
+                    if (cont == 1) {
+                        Nusuario = por;
+                        cont += 1;
+                        por = ''
+                    }
+                    else {
+                        if (cont == 2) {
+                            Num = por;
+                            cont += 1;
+                            por = ''
+                        }
+                        else {
+                            if (cont == 3) {
+                                MinhaMensagem = por;
+                                cont = 0;
+                                por = ''
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for (var j = 0; j < comprimento; j++) {
+            list += 1;
+            listStr = list.toString()
+            if (Num == listStr) {
+                var row = document.createElement("tr");
+                for (var i = 0; i < 2; i++) {
+
+                    if (i == 0) {
+                        var cell = document.createElement("th");
+                        var cellText = document.createTextNode(Nusuario);
+                    }
+                    else {
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(MinhaMensagem);
+                    }
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                }
+                tblBody.appendChild(row);
+            }
+            tbl.appendChild(tblBody);
+            div.appendChild(tbl);
+            tbl.setAttribute("border", "1");
+        }
+    }
+    function sair(a){
+        @{
+            ConexaoController conexao = new ConexaoController();
+        }
+        if (a == false){
+            @{
+                conexao.Sair();
+            }
+        }
+    }
+        function atualizarcon(){
+            @{
+                edbancoEntities banco = new edbancoEntities();
+                foreach (var item in banco.usuario.ToList())
+                {
+                    if (item.idusuario == ViewBag.usu){
+                        if (item.conexao == false)
+                        {
+                            conexao.Sair();
+                        }
+                    }
+                }
+            }
+        }
+        function addmensagem(k, tamanho, valor) {
+            var body = document.getElementsByTagName("body")[0];
+            var div = document.getElementById("chat");
+
+            var tbl = document.createElement("table");
+            var tblBody = document.createElement("tbody");
+            var Nsala;
+            var Nusuario;
+            var Num;
+            var MinhaMensagem = valor;
+            var por = '';
+            var cont = 0;
+            for (var item = 0; item < tamanho ; item++) {
+                if (k[item] != '|'){
+                    por += k[item];
+                }
+                else {
+                    if (cont == 0) {
+                        Nsala = por;
+                        cont += 1;
+                        por = '';
+                    }
+                    else {
+                        if (cont == 1) {
+                            Nusuario = por;
+                            cont += 1;
+                            por = '';
+                        }
+                        else{
+                            
+                                Num = por;
+                                cont += 1;
+                                por = '';
+                        }
+                    }
+                }
+            }
+
+            for (var j = 0; j < 1; j++) {
+
+                var row = document.createElement("tr");
+                for (var i = 0; i < 2; i++) {
+
+                    if (i == 0) {
+                        var cell = document.createElement("th");
+                        var cellText = document.createTextNode(Nusuario);
+                    }
+                    else {
+                        var cell = document.createElement("td");
+                        var cellText = document.createTextNode(MinhaMensagem);
+                    }
+                    cell.appendChild(cellText);
+                    row.appendChild(cell);
+                }
+                tblBody.appendChild(row);
+            }
+            tbl.appendChild(tblBody);
+            div.appendChild(tbl);
+            tbl.setAttribute("border", "1");
+        }
+    </script>
+
+</head>
+<body>
+    @{
+        int determinar = ViewBag.id;
+        edbancoEntities db = new edbancoEntities();
+        List<chat> numeroch = new List<chat>();
+        var nu = 0;
+        var comprimento = 0;
+        var lisMensagens = "";
+        foreach (var item in db.chat.ToList())
+        {
+             if (item.idSala == determinar){
+                 <script>var nk = @item.numero;
+                     alert(nk)</script>
+                if (numeroch == null) { 
+                foreach (var numeros in numeroch)
+                {
+                    if (item.numero != numeros.numero){
+                        numeroch.Add(item);
+                        lisMensagens += item.idSala + "|" + item.idUsuario + "|" + item.numero + "|" + item.mensagem + "|";
+                        comprimento += 1;
+                    }
+                }
+                }
+                else
+                {
+                    numeroch.Add(item);
+                    lisMensagens += item.idSala + "|" + item.idUsuario + "|" + item.numero + "|" + item.mensagem + "|";
+                    comprimento += 1;
+                }
+            }
+        }
+        foreach (var item in lisMensagens)
+        {
+            nu += 1;
+ 
+        }
+        <script>var objetoCH = '@lisMensagens';
+            list = 0;
+    </script>
+    }
+    <div onload='startIN(objetoCH, @nu, @comprimento)' onmouseover='startIN(objetoCH, @nu, @comprimento)'>
+        
+        <div id="chat" class="chat" onmousemove="atualizarcon()">
+
+        </div>
+        <div>
+            <div class="campoDig">
+                <form>
+                    <input type="text" name="mensagem">
+                    @{
+                        var valor = nu + 1;
+                        var novo = ViewBag.id + "|" + ViewBag.usuario + "|" + valor + "|";
+                        <script>
+                            var obH = '@novo';
+                            var escritos = 0;
+                        </script>
+                    }
+                    <button onclick='alert(mensagem.value)'>Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <button onclick='alert("ok")'>Teste</button>
+    <table>
+        <tbody>
+            <tr>
+                <th>
+                    Titulo
+                </th>
+                <td>
+                    fim
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+
+    </div>
+</body>
+</html>

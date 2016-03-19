@@ -17,6 +17,7 @@ namespace MeuSite.Models
         public int idarquivoBiblioteca { get; set; }
         public int idTemaSala { get; set; }
         public string nome { get; set; }
-        public bool conteudo { get; set; }
+        public string conteudo { get; set; }
+        public bool privacidade { get; set; }
     }
 }

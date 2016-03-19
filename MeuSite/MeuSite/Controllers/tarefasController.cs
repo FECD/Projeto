@@ -38,6 +38,7 @@ namespace MeuSite.Controllers
         // GET: tarefas/Create
         public ActionResult Create()
         {
+
             return View();
         }
 
@@ -46,10 +47,13 @@ namespace MeuSite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idtarefa,idSala,titulo,dataEntrega,entregue")] tarefa tarefa)
+        public ActionResult Create([Bind(Include = "idtarefa,titulo,dataEntrega")] tarefa tarefa)
         {
+            ViewBag.idSala = TempData["IDSALA"];
             if (ModelState.IsValid)
             {
+                tarefa.idSala = ViewBag.idSala;
+                tarefa.entregue = false;
                 db.tarefa.Add(tarefa);
                 db.SaveChanges();
                 return RedirectToAction("Index");
