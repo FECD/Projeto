@@ -107,6 +107,12 @@ namespace MeuSite.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "idusuario,nome,email,senha")] usuario usuario)
         {
+            List<usuario> lista = db.usuario.ToList().FindAll(item => item.email == usuario.email);
+            if (lista != null)
+            {
+                ViewBag.mensagem = "Esse Email está registrado em outra conta";
+                return RedirectToAction("Create", "usuarios");
+            }
             if (ModelState.IsValid)
             {
                 usuario.conexao = false;

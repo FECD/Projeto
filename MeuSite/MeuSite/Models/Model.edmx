@@ -19,10 +19,10 @@
         <EntityType Name="arquivotarefa">
           <Key>
             <PropertyRef Name="idArquivoTarefa" />
-            <PropertyRef Name="idArquivoBiblioteca" />
           </Key>
           <Property Name="idArquivoTarefa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idArquivoBiblioteca" Type="int" Nullable="false" />
+          <Property Name="idTarefa" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="chat">
           <Key>
@@ -42,7 +42,15 @@
           <Property Name="idsala" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idTemaSala" Type="int" Nullable="false" />
           <Property Name="Nome" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="Descrecao" Type="varchar" MaxLength="45" />
+          <Property Name="Descricao" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="salabiblioteca">
+          <Key>
+            <PropertyRef Name="idsalabiblioteca" />
+          </Key>
+          <Property Name="idsalabiblioteca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idSala" Type="int" Nullable="false" />
+          <Property Name="idArquivobiblioteca" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tarefa">
           <Key>
@@ -52,7 +60,7 @@
           <Property Name="idtarefa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="idSala" Type="int" Nullable="false" />
           <Property Name="titulo" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="dataEntrega" Type="date" Nullable="false" />
+          <Property Name="dataEntrega" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="entregue" Type="bool" Nullable="false" />
         </EntityType>
         <EntityType Name="temasala">
@@ -87,6 +95,7 @@
           <EntitySet Name="arquivotarefa" EntityType="Self.arquivotarefa" Schema="edbanco" store:Type="Tables" />
           <EntitySet Name="chat" EntityType="Self.chat" Schema="edbanco" store:Type="Tables" />
           <EntitySet Name="sala" EntityType="Self.sala" Schema="edbanco" store:Type="Tables" />
+          <EntitySet Name="salabiblioteca" EntityType="Self.salabiblioteca" Schema="edbanco" store:Type="Tables" />
           <EntitySet Name="tarefa" EntityType="Self.tarefa" Schema="edbanco" store:Type="Tables" />
           <EntitySet Name="temasala" EntityType="Self.temasala" Schema="edbanco" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="edbanco" store:Type="Tables" />
@@ -111,10 +120,10 @@
         <EntityType Name="arquivotarefa">
           <Key>
             <PropertyRef Name="idArquivoTarefa" />
-            <PropertyRef Name="idArquivoBiblioteca" />
           </Key>
           <Property Name="idArquivoTarefa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idArquivoBiblioteca" Type="Int32" Nullable="false" />
+          <Property Name="idTarefa" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="chat">
           <Key>
@@ -134,7 +143,15 @@
           <Property Name="idsala" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idTemaSala" Type="Int32" Nullable="false" />
           <Property Name="Nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Descrecao" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Descricao" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="salabiblioteca">
+          <Key>
+            <PropertyRef Name="idsalabiblioteca" />
+          </Key>
+          <Property Name="idsalabiblioteca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idSala" Type="Int32" Nullable="false" />
+          <Property Name="idArquivobiblioteca" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="tarefa">
           <Key>
@@ -179,6 +196,7 @@
           <EntitySet Name="arquivotarefa" EntityType="Self.arquivotarefa" />
           <EntitySet Name="chat" EntityType="Self.chat" />
           <EntitySet Name="sala" EntityType="Self.sala" />
+          <EntitySet Name="salabiblioteca" EntityType="Self.salabiblioteca" />
           <EntitySet Name="tarefa" EntityType="Self.tarefa" />
           <EntitySet Name="temasala" EntityType="Self.temasala" />
           <EntitySet Name="usuario" EntityType="Self.usuario" />
@@ -206,6 +224,7 @@
               <MappingFragment StoreEntitySet="arquivotarefa">
                 <ScalarProperty Name="idArquivoTarefa" ColumnName="idArquivoTarefa" />
                 <ScalarProperty Name="idArquivoBiblioteca" ColumnName="idArquivoBiblioteca" />
+                <ScalarProperty Name="idTarefa" ColumnName="idTarefa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -226,7 +245,16 @@
                 <ScalarProperty Name="idsala" ColumnName="idsala" />
                 <ScalarProperty Name="idTemaSala" ColumnName="idTemaSala" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
-                <ScalarProperty Name="Descrecao" ColumnName="Descrecao" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="salabiblioteca">
+            <EntityTypeMapping TypeName="edbancoModel.salabiblioteca">
+              <MappingFragment StoreEntitySet="salabiblioteca">
+                <ScalarProperty Name="idsalabiblioteca" ColumnName="idsalabiblioteca" />
+                <ScalarProperty Name="idSala" ColumnName="idSala" />
+                <ScalarProperty Name="idArquivobiblioteca" ColumnName="idArquivobiblioteca" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -29,6 +29,7 @@ namespace MeuSite.Models
         public virtual DbSet<arquivotarefa> arquivotarefa { get; set; }
         public virtual DbSet<chat> chat { get; set; }
         public virtual DbSet<sala> sala { get; set; }
+        public virtual DbSet<salabiblioteca> salabiblioteca { get; set; }
         public virtual DbSet<tarefa> tarefa { get; set; }
         public virtual DbSet<temasala> temasala { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }

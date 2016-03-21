@@ -1,4 +1,4 @@
-﻿@model MeuSite.Models.sala
+﻿@model IEnumerable<MeuSite.Models.temasala>
 
 @{
     ViewBag.Title = "Pesquisando salas";
@@ -11,18 +11,9 @@
     @using MeuSite.Models;
 </head>
 <body>
-    @{
-        //edbancoEntities db = new edbancoEntities();
-        @*if (ViewBag.info != null){
-            <div>@ViewBag.info</div>
-        }*@
-        
-    }
-
     @using (Html.BeginForm("Filtrar", "salas", FormMethod.Post))
     {
 
-        //sala obj = new sala();
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <table class="tabSUb">
@@ -31,17 +22,13 @@
                         <div class="form-group">
                             <div class="col-md-10 submenu">
                                 Filtrar por Tema
-                                @*<select name="idtemasala" form="carform">
+                                <select name="idtemasala">
                                     <option value=0> Todos </option>
-                                    @foreach (var item in Model.)
+                                    @foreach (var item in Model)
                                     {
                                         <option value=@item.idTemaSala>@item.nome</option>
                                     }
-                                </select>*@
-
-                                @*@Html.DropDownList("IdTemaSala", null ,htmlAttributes: new { @class = "form-control" })*@
-                                @*@Html.DropDownList("idTemaSala", null, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => obj.idTemaSala, "", new { @class = "text-danger" })*@
+                                </select>
                             </div>
                         </div>
                     </td>
@@ -49,9 +36,7 @@
                         <div class="form-group">
                             <div class="col-md-10 submenu">
                                 Filtrar por Nome
-                                <input type="text" name="Nome" class="alert-danger" />
-                                @*@Html.EditorFor(model => obj.Nome, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => obj.Nome, "", new { @class = "text-danger" })*@
+                                <input type="text" name="Nome" class="alert-danger" />                                
                             </div>
                         </div>
                     </td>
@@ -61,51 +46,8 @@
                         </div>
                     </td>
                     <td></td>
-                    @*<td>
-                        <input type="submit" value="Restaurar filtragem" class="btn btn-default" />
-                    </td*@
                 </tr>
         </table>
     }
-    <p>
-        <input type="submit" value="Restaurar" class="btn btn-default" />
-    </p>
-    @*<h2 style="background-color:white; text-align:center">Salas</h2>
-    <div style="background-color:white; overflow: scroll; height:50%; width:60%;">
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayName("Nome")
-                </th>
-                <th>
-                    @Html.DisplayName("Tema")
-                </th>
-                <th>
-                    @Html.DisplayName("Descrição")
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model.listaSalas) {
-            
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayName(Model.listaTemas.Find(s => s.idTemaSala == item.idTemaSala).nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descrecao)
-                    </td>
-                    <td>
-                        
-                    </td>
-                </tr>
-            }
-            }
-
-        </table>
-    </div>*@
 </body>
 </html>

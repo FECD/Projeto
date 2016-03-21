@@ -12,10 +12,10 @@ namespace MeuSite.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class arquivotarefa
+    public partial class salabiblioteca
     {
-        public int idArquivoTarefa { get; set; }
-        public int idArquivoBiblioteca { get; set; }
-        public int idTarefa { get; set; }
+        public int idsalabiblioteca { get; set; }
+        public int idSala { get; set; }
+        public int idArquivobiblioteca { get; set; }
     }
 }

@@ -168,7 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Classes\TarefaChat.cs" />
-    <Compile Include="Classes\TemasESalas.cs" />
+    <Compile Include="Classes\salasbibliotecaEtarefas.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\arquivobibliotecasController.cs" />
     <Compile Include="Controllers\arquivotarefasController.cs" />
@@ -212,6 +212,9 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\sala.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\salabiblioteca.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tarefa.cs">
@@ -370,6 +373,8 @@
     <Content Include="Views\usuarios\Sair.cshtml" />
     <Content Include="Views\usuariosalas\Salas - Copy.cshtml" />
     <Content Include="Views\salas\Filtrar.cshtml" />
+    <Content Include="Views\salas\Materiais.cshtml" />
+    <Content Include="Views\arquivobibliotecas\Filtrar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

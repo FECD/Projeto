@@ -1,0 +1,68 @@
+﻿@model MeuSite.Classes.salasbibliotecaEtarefas
+
+@{
+    ViewBag.Title = "Materiais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    @using MeuSite.Models;
+</head>
+<body>
+    <h2>Materiais</h2>
+    @{
+        edbancoEntities db = new edbancoEntities();
+    }
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayName("Nome do arquivo")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.listaSalasBiblioteca)
+        {
+            <tr>
+                <td>
+                    @Html.Display(db.arquivobiblioteca.ToList().Find(escolha => escolha.idarquivoBiblioteca == item.idArquivobiblioteca).nome.ToString())
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.idsalabiblioteca }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.idsalabiblioteca }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.idsalabiblioteca })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayName("Nome do arquivo")
+            </th>
+            <th></th>
+        </tr>
+        
+        @foreach (var item in Model.listaArquivoTarefa)
+        {
+            <tr>
+                <td>
+                    item.idArquivoBiblioteca
+                    @Html.Display(db.arquivobiblioteca.ToList().Find(escolha => escolha.idarquivoBiblioteca == item.idArquivoBiblioteca).nome.ToString())
+                </td>
+                <td>
+                    
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.idsalabiblioteca })*@
+                </td>
+            </tr>
+        }
+        
+
+    </table>
+</body>
+</html>

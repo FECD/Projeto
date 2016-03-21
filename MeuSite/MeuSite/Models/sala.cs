@@ -17,6 +17,6 @@ namespace MeuSite.Models
         public int idsala { get; set; }
         public int idTemaSala { get; set; }
         public string Nome { get; set; }
-        public string Descrecao { get; set; }
+        public string Descricao { get; set; }
     }
 }

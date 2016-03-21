@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<MeuSite.Models.sala>
 
 @{
-    ViewBag.Title = "SuasSalas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <html>
 <head>
+    <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width" />
     <link href="~/Css/SuasSalas.css" rel="stylesheet" />
 </head>
@@ -28,8 +28,10 @@
                     <tr>
                         <td>
                             <div class="itensSala">
+                                @if (item != null) { 
                                 <p>@Html.ActionLink(@item.Nome, "Salas", new { id = item.idsala, usu = idusu, gerencia = true })</p>
-                                <p>@item.Descrecao</p>
+                                <p>@item.Descricao</p>
+                                }
                             </div>
                         </td>
                         <td></td>

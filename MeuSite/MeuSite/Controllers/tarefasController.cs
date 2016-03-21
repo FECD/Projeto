@@ -46,14 +46,18 @@ namespace MeuSite.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "idtarefa,titulo,dataEntrega")] tarefa tarefa)
         {
+            //System.Date dataBancoMysql = Convert.ToDateTime(dataEntrega.ToString()).ToString("yyyy/MM/dd");
+            //tarefa.dataEntrega.ToUniversalTime();
             ViewBag.idSala = TempData["IDSALA"];
+            TempData["IDSALA"] = ViewBag.idSala;
+            tarefa.idSala = ViewBag.idSala;
+            tarefa.entregue = false;
+            //tarefa.dataEntrega = dataBancoMysql.ToString();
             if (ModelState.IsValid)
             {
-                tarefa.idSala = ViewBag.idSala;
-                tarefa.entregue = false;
                 db.tarefa.Add(tarefa);
                 db.SaveChanges();
                 return RedirectToAction("Index");

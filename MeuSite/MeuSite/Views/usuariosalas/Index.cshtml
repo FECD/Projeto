@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MeuSite.Models.usuariosala>
+﻿@model MeuSite.Models.usuariosala
 
 @{
     ViewBag.Title = "Index";
@@ -13,6 +13,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.idSala)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.proprietario)
         </th>
         <th>
@@ -20,21 +23,26 @@
         </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.proprietario)
+            @Html.DisplayFor(modelItem => Model.idSala)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.acessopermitido)
+            @Html.DisplayFor(modelItem => Model.proprietario)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.DisplayFor(modelItem => Model.acessopermitido)
+        </td>
+        <td>
+            @{
+                if (Model.acessopermitido == false)
+                {
+                    <p>@Html.ActionLink("Solicitar Participação", "Criete", new { id= Model.idSala, iduse = ViewBag.idusuario})</p>
+                }
+            }
         </td>
     </tr>
-}
 
+    @ViewBag.resposta
+    
 </table>

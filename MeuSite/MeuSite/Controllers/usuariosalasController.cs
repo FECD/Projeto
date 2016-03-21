@@ -18,16 +18,15 @@ namespace MeuSite.Controllers
         // GET: usuariosalas
         public ActionResult Salas(int id, int usu, Boolean gerencia)
         {
-
+            ViewBag.mensagem = TempData["ID"];
+            TempData["ID"] = ViewBag.mensagem;
             ViewBag.acesso = TempData["Acesso"];
             TarefaChat lista = new TarefaChat();
             List<chat> listaCH = new List<chat>();
             List<tarefa> listaTa = new List<tarefa>();
-            if (id != null)
-            {
-                listaCH = db.chat.ToList().FindAll(item => item.idSala == id);
-                listaTa = db.tarefa.ToList().FindAll(item => item.idSala == id);
-            }
+            listaCH = db.chat.ToList().FindAll(item => item.idSala == id);
+            listaTa = db.tarefa.ToList().FindAll(item => item.idSala == id);
+           
             //foreach (var item in db.chat.ToList().)
             //{
             //    if (item.idSala == id)
@@ -44,50 +43,69 @@ namespace MeuSite.Controllers
             TempData["Acesso"] = ViewBag.acesso;
             return View(lista);
         }
+        public ActionResult PesquisaBiblioteca(int id)
+        {
+            ViewBag.mensagem = TempData["ID"];
+            TempData["ID"] = ViewBag.mensagem;
+            TempData["IDSALA"] = id;
+            return RedirectToAction("Index", "arquivobibliotecas");
+        }
+        public ActionResult Materiais(int id)
+        {
+            ViewBag.mensagem = TempData["ID"];
+            TempData["ID"] = ViewBag.mensagem;
+            TempData["IDSALA"] = id;
+            return RedirectToAction("Materiais", "salas");
+        }
         public ActionResult Tarefas(int id)
         {
+            ViewBag.mensagem = TempData["ID"];
+            TempData["ID"] = ViewBag.mensagem;
             TempData["IDSALA"] = id;
             return RedirectToAction("Create", "tarefas");
         }
         public ActionResult Arquivos(int id)
         {
+            ViewBag.mensagem = TempData["ID"];
+            TempData["ID"] = ViewBag.mensagem;
             TempData["IDSALA"] = id;
             return RedirectToAction("Create", "arquivobibliotecas");
         }
         public ActionResult SuasSalas()
         {
-            ViewBag.acesso = TempData["Acesso"];
             ViewBag.mensagem = TempData["ID"];
             TempData["ID"] = ViewBag.mensagem;
+            ViewBag.acesso = TempData["Acesso"];
             if (ViewBag.mensagem == null)
             {
                 return RedirectToAction("Entrar", "usuarios");
             }
-            List<sala> lista = new List<sala>();
-            foreach (var item in db.usuariosala.ToList())
+            List<usuariosala> lista = db.usuariosala.ToList().FindAll(item => item.idUsuario == ViewBag.mensagem);
+            List<sala> listasala = new List<sala>();
+            foreach (var item in lista)
             {
-                if (TempData["ID"].Equals(item.idUsuario))
-                {
-                    foreach (var sala in db.sala.ToList())
-                    {
-                        if (item.idSala == sala.idsala)
-                        {
-                            lista.Add(sala);
-                        }
-                    }
-                }
+                sala novo = db.sala.ToList().Find(s => s.idsala == item.idSala);
+                listasala.Add(novo);
+                //if (               {
+                //    foreach (var sala in db.sala.ToList())
+                //    {
+                //        if (item.idSala == sala.idsala)
+                //        {
+                //            lista.Add(sala);
+                //        }
+                //    }
+                //}
             }
 
             TempData["ID"] = ViewBag.mensagem;
             TempData["Acesso"] = ViewBag.acesso;
-            return View(lista);
+            return View(listasala);
         }
         public ActionResult CriarSala()
         {
-            ViewBag.id = TempData["ID"];
-            TempData["ID"] = ViewBag.id;
-            usuario objuser = db.usuario.Find(ViewBag.id);
-            if (objuser.conexao == true){
+            ViewBag.idusuario = TempData["ID"];
+            TempData["ID"] = ViewBag.idusuario;
+            if (ViewBag.idusuario != null){
                 return RedirectToAction("Create", "salas");
             }
             else
@@ -98,10 +116,31 @@ namespace MeuSite.Controllers
         }
         public ActionResult Pesquisa()
         {
-            ViewBag.id = TempData["ID"];
-            TempData["ID"] = ViewBag.id;
-            usuario objuser = db.usuario.Find(ViewBag.id);
-            if (objuser.conexao == true)
+            ViewBag.idusuario = TempData["ID"];
+            TempData["ID"] = ViewBag.idusuario;
+            if (ViewBag.idusuario == null)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            List<usuario> coleta = db.usuario.ToList().FindAll(item => item.idusuario == ViewBag.idusuario);
+            if (coleta == null)
+            {
+                return RedirectToAction("Index", "usuarios");
+            }
+            usuario pessoa = new usuario();
+            foreach (var item in coleta)
+            {
+                pessoa = item;
+            }
+            if (pessoa.conexao == false)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            ViewBag.Id = pessoa.idusuario;
+            TempData["ID"] = pessoa.idusuario;
+            TempData["Email"] = pessoa.email;
+            TempData["Acesso"] = pessoa.conexao;
+            if (ViewBag.idusuario != null)
             {
                 return RedirectToAction("Index", "salas");
             }
@@ -113,7 +152,37 @@ namespace MeuSite.Controllers
         }
         public ActionResult Index()
         {
-            return View(db.usuariosala.ToList());
+            ViewBag.idsala = TempData["Pids"];
+            ViewBag.idusuario = TempData["ID"];
+            TempData["ID"] = ViewBag.idusuario;
+            List<usuariosala> lista = db.usuariosala.ToList().FindAll(item => item.idSala == ViewBag.idsala);
+            usuariosala relacao = new usuariosala();
+            if (lista != null)
+            {
+                relacao = lista.Find(s => s.idUsuario == ViewBag.idusuario);
+                if (relacao == null)
+                {
+                    ViewBag.resposta = "Você não é um membro dessa sala";
+                }
+                else
+                {
+                    if (relacao.proprietario == true)
+                    {
+                        ViewBag.resposta = "Você é um Administrador dessa sala";
+                    }
+                    if (relacao.acessopermitido == true)
+                    {
+                        ViewBag.resposta = "Você é um membro dessa sala";
+                    }
+                    if (relacao.acessopermitido == false)
+                    {
+                        ViewBag.resposta = "Você solicitou participação nessa sala";
+                    }
+
+                        
+                }
+            }
+            return View(relacao);
         }
 
         // GET: usuariosalas/Details/5

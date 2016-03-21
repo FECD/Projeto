@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MeuSite.Models.sala>
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -12,8 +12,7 @@
     <title>Filtrar</title>
 </head>
 <body>
-    @ViewBag.Tema
-    @ViewBag.Nome
+    @ViewBag.resposta
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
@@ -23,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Descrecao)
+                @Html.DisplayNameFor(model => model.Descricao)
             </th>
             <th></th>
         </tr>
@@ -34,12 +33,10 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Descrecao)
+                @Html.DisplayFor(modelItem => item.Descricao)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Ver", "vercadastro", new { id=item.idsala })
             </td>
         </tr>
     }

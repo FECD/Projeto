@@ -18,7 +18,39 @@ namespace MeuSite.Controllers
         // GET: arquivobibliotecas
         public ActionResult Index()
         {
-            return View(db.arquivobiblioteca.ToList());
+            return View(db.temasala.ToList());
+        }
+        public ActionResult Filtrar(int idtemasala, string Nome)
+        {
+            List<arquivobiblioteca> lista = new List<arquivobiblioteca>();
+            List<arquivobiblioteca> listasFinal = new List<arquivobiblioteca>();
+            if (idtemasala != 0)
+            {
+                ViewBag.Tema = db.temasala.ToList().Find(item => item.idTemaSala == idtemasala).nome;
+                lista = db.arquivobiblioteca.ToList().FindAll(item => item.idTemaSala == idtemasala);
+                ViewBag.Mensagem = "Arquivos com temas " + ViewBag.Tema.ToString();
+            }
+            else
+            {
+                lista = db.arquivobiblioteca.ToList();
+                ViewBag.Mensagem = "Arquivos com qualquer tema";
+            }
+            if (Nome != "")
+            {
+                listasFinal = lista.FindAll(item => item.nome == Nome);
+                ViewBag.Mensagem += " e com o nome " + Nome;
+            }
+            else
+            {
+                listasFinal = lista;
+                ViewBag.Mensagem += " E qualquer nome";
+            }
+            ViewBag.Tema = idtemasala;
+            ViewBag.Nome = Nome;
+
+            return View(listasFinal);
+            //List<sala> listinha = sala.FindAll(s => s.Nome =="IF");
+            //return RedirectToAction("Index","salas");
         }
 
         // GET: arquivobibliotecas/Details/5
@@ -60,6 +92,7 @@ namespace MeuSite.Controllers
                 path = Url.Content(Path.Combine("~/Arquivos/Biblioteca", fileName));
                 arquivobiblioteca.conteudo = path;
                 arquivobiblioteca.idTemaSala = sala.idTemaSala;
+                arquivobiblioteca.nome = fileName.ToString();
                 db.arquivobiblioteca.Add(arquivobiblioteca);
                 db.SaveChanges();
                 return RedirectToAction("Index");

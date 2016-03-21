@@ -17,22 +17,27 @@ namespace MeuSite.Controllers
         }
         public ActionResult Index()
         {
+            ViewBag.Email = TempData["Email"];
+            TempData["Email"] = ViewBag.Email;
             if (TempData["Email"] == null)
             {
                 return RedirectToAction("Entrar", "usuarios");
             }
-            usuario pessoa = new usuario();
-            foreach (var item in db.usuario.ToList())
+            List<usuario> lista = db.usuario.ToList().FindAll(item => item.email == ViewBag.Email);
+            if (lista == null)
             {
-                if (item.email == TempData["Email"].ToString())
-                {
+                return RedirectToAction("Index", "usuarios");
+            }
+            usuario pessoa = new usuario();
+            foreach (var item in lista)
+            {
                     pessoa = item;
-                }
             }
             if (pessoa.conexao == false)
             {
                 return RedirectToAction("Entrar", "usuarios");
             }
+            ViewBag.Id = pessoa.idusuario;
             TempData["ID"] = pessoa.idusuario;
             TempData["Email"] = pessoa.email;
             TempData["Acesso"] = pessoa.conexao;
