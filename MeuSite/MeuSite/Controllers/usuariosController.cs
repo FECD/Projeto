@@ -23,14 +23,20 @@ namespace MeuSite.Controllers
         public ActionResult Entrar([Bind(Include = "email,senha")] usuario usuario)
         {
             usuario useencontrado = db.usuario.ToList().Find(s => s.email == usuario.email);
-            if (useencontrado.senha == usuario.senha)
+            if (useencontrado != null)
             {
-                usuario novo = useencontrado;
-                novo.conexao = true;
-                db.Entry(novo).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["Email"] = novo.email;
-                return RedirectToAction("Index", "Home");
+                if (useencontrado.senha == usuario.senha)
+                {
+                    usuario novo = useencontrado;
+                    novo.conexao = true;
+                    db.Entry(novo).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["Email"] = novo.email;
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else{
+                return RedirectToAction("Entrar", "usuarios");
             }
             //foreach (var item in )
             //{
@@ -49,6 +55,24 @@ namespace MeuSite.Controllers
             //}
 
             return View();
+        }
+        public ActionResult Sair()
+        {
+            ViewBag.Idusuario = TempData["ID"];
+            TempData.Clear();
+            usuario atual = db.usuario.ToList().Find(s => s.idusuario == ViewBag.Idusuario);
+            if (atual != null)
+            {
+                atual.conexao = false;
+                db.Entry(atual).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            else
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            
         }
         public ActionResult Perfil()
         {
@@ -104,24 +128,26 @@ namespace MeuSite.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "idusuario,nome,email,senha")] usuario usuario)
         {
-            List<usuario> lista = db.usuario.ToList().FindAll(item => item.email == usuario.email);
-            if (lista != null)
+            usuario existente = db.usuario.ToList().Find(item => item.email == usuario.email);
+            if (existente != null)
             {
-                ViewBag.mensagem = "Esse Email está registrado em outra conta";
+                ViewBag.aviso= "Esse Email está registrado em outra conta";
                 return RedirectToAction("Create", "usuarios");
             }
-            if (ModelState.IsValid)
+            else
             {
-                usuario.conexao = false;
-                db.usuario.Add(usuario);
-                db.SaveChanges();
-                return RedirectToAction("Entrar", "usuarios");
+                //if (ModelState.IsValid)
+                
+                    usuario.conexao = false;
+                    db.usuario.Add(usuario);
+                    db.SaveChanges();
+                    return RedirectToAction("Entrar", "usuarios");
+                
             }
 
-            return View(usuario);
+            //return View(usuario);
         }
 
         // GET: usuarios/Edit/5

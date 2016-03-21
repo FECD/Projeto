@@ -32,9 +32,9 @@
                     @Html.DisplayName(db.arquivobiblioteca.ToList().Find(escolha => escolha.idarquivoBiblioteca == item.idArquivobiblioteca).nome)
                 </td>
                 <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.idsalabiblioteca }) |*@
+                    @Html.ActionLink("Baixar", "Download", new { id = item.idArquivobiblioteca }) |
                     @*@Html.ActionLink("Details", "Details", new { id = item.idsalabiblioteca }) |*@
-                    @Html.ActionLink("Delete", "Delete", new { id = item.idsalabiblioteca })
+                    @Html.ActionLink("Desvincular", "DesVincular", new { id = ViewBag.id, idar = item.idArquivobiblioteca })
                 </td>
             </tr>
         }

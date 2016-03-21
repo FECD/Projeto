@@ -12,7 +12,6 @@ namespace MeuSite.Controllers
         edbancoEntities db = new edbancoEntities();
         public ActionResult Sair()
         {
-            TempData.Clear();
             return RedirectToAction("Sair", "usuarios");
         }
         public ActionResult Index()

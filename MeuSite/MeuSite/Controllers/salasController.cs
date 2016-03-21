@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MeuSite.Models;
 using MeuSite.Classes;
+using System.IO;
 
 namespace MeuSite.Controllers
 {
@@ -69,6 +70,48 @@ namespace MeuSite.Controllers
             listas.listaSalasBiblioteca = listaBiblio;
             listas.listaArquivoTarefa = listata;
             return View(listas);
+        }
+        public ActionResult DesVincular(int id, int idar)
+        {
+            return RedirectToAction("DesVincular", "arquivobibliotecas", new { id = id, arid = idar });
+        }
+        public FileResult Download(int id)
+        {
+            int arquivoId = Convert.ToInt32(id);
+            List<arquivobiblioteca> arquivos = db.arquivobiblioteca.ToList();
+            string nomeArquivo = arquivos.Find(s => s.idarquivoBiblioteca == id).conteudo.ToString();
+            //select arquivo.conteudo).First();
+            //string contentType = "application/pdf";
+            string nome = arquivos.Find(s => s.idarquivoBiblioteca == id).nome.ToString();
+            string ext =arquivos.Find(s => s.idarquivoBiblioteca == id).conteudo;
+            var con = 0;
+            var valor = 0;
+            foreach (var n in ext)
+            {
+                if (n.ToString() == ".")
+                {
+                    valor += 1;
+                }
+                if (valor != 0)
+                {
+                    valor += 1;
+                }
+                else
+                {
+                    con += 1;
+                }
+            }
+            string completo = nome + ".";
+            for (var j = 0; j < valor; j++)
+            {
+                completo += ext[con + j -1 ].ToString();
+            }
+            //string p1 = ext[con-1].ToString();
+            //string p2 = ext[con - 2].ToString();
+            //string p3 = ext[con - 3].ToString();
+            //string completo = nome + "." + p3 + p2 + p1;
+            return File(nomeArquivo, nome, completo);
+
         }
         public ActionResult vercadastro(int id)
         {
