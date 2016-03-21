@@ -16,6 +16,43 @@ namespace MeuSite.Controllers
         private edbancoEntities db = new edbancoEntities();
 
         // GET: usuariosalas
+        public int Definir(int id)
+        {
+            return id;
+        }
+        public ActionResult AdmSala(int id, int usu)
+        {
+            ViewBag.idusuario = TempData["ID"];
+            TempData["ID"] = ViewBag.idusuario;
+            if (ViewBag.idusuario == null)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            List<usuario> coleta = db.usuario.ToList().FindAll(item => item.idusuario == ViewBag.idusuario);
+            if (coleta == null)
+            {
+                return RedirectToAction("Index", "usuarios");
+            }
+            usuario pessoa = new usuario();
+            foreach (var item in coleta)
+            {
+                pessoa = item;
+            }
+            if (pessoa.conexao == false)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            TempData["ID"] = pessoa.idusuario;
+            TempData["Email"] = pessoa.email;
+            TempData["Acesso"] = pessoa.conexao;
+            ViewBag.acesso = TempData["Acesso"];
+            ViewBag.id = id;
+            List<usuariosala> relacionados = db.usuariosala.ToList().FindAll(s => s.idSala == id);
+            Membros membros = new Membros();
+            membros.listaPartiipantes = relacionados.FindAll(s => s.acessopermitido == true);
+            membros.listaPendentes = relacionados.FindAll(s => s.acessopermitido == false);
+            return View(membros);
+        }
         public ActionResult Salas(int id, int usu, Boolean gerencia)
         {
             ViewBag.idusuario = TempData["ID"];
@@ -38,7 +75,6 @@ namespace MeuSite.Controllers
             {
                 return RedirectToAction("Entrar", "usuarios");
             }
-            ViewBag.Id = pessoa.idusuario;
             TempData["ID"] = pessoa.idusuario;
             TempData["Email"] = pessoa.email;
             TempData["Acesso"] = pessoa.conexao;
@@ -55,6 +91,7 @@ namespace MeuSite.Controllers
             ViewBag.id = id;
             ViewBag.usuario = usu;
             TempData["Acesso"] = ViewBag.acesso;
+            ViewBag.privilegios = gerencia;
             return View(lista);
         }
         public ActionResult PesquisaBiblioteca(int id)
@@ -109,31 +146,66 @@ namespace MeuSite.Controllers
         }
         public ActionResult SuasSalas()
         {
-            ViewBag.mensagem = TempData["ID"];
-            TempData["ID"] = ViewBag.mensagem;
-            ViewBag.acesso = TempData["Acesso"];
-            if (ViewBag.mensagem == null)
+            ViewBag.idusuario = TempData["ID"];
+            TempData["ID"] = ViewBag.idusuario;
+            if (ViewBag.idusuario == null)
             {
                 return RedirectToAction("Entrar", "usuarios");
             }
-            List<usuariosala> lista = db.usuariosala.ToList().FindAll(item => item.idUsuario == ViewBag.mensagem);
-            List<sala> listasala = new List<sala>();
+            List<usuario> coleta = db.usuario.ToList().FindAll(item => item.idusuario == ViewBag.idusuario);
+            if (coleta == null)
+            {
+                return RedirectToAction("Index", "usuarios");
+            }
+            usuario pessoa = new usuario();
+            foreach (var item in coleta)
+            {
+                pessoa = item;
+            }
+            if (pessoa.conexao == false)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            TempData["ID"] = pessoa.idusuario;
+            TempData["Email"] = pessoa.email;
+            TempData["Acesso"] = pessoa.conexao;
+            ViewBag.acesso = TempData["Acesso"];
+            List<usuariosala> lista = db.usuariosala.ToList().FindAll(item => item.idUsuario == ViewBag.idusuario);
+            List<sala> listacvin = new List<sala>();
+            ViewBag.tc = "";
             foreach (var item in lista)
             {
                 sala novo = db.sala.ToList().Find(s => s.idsala == item.idSala);
-                listasala.Add(novo);
-                //if (               {
-                //    foreach (var sala in db.sala.ToList())
-                //    {
-                //        if (item.idSala == sala.idsala)
-                //        {
-                //            lista.Add(sala);
-                //        }
-                //    }
-                //}
+                if (novo != null)
+                {
+                    listacvin.Add(novo);
+                }
+                
             }
-
-            TempData["ID"] = ViewBag.mensagem;
+            List<sala> listasAdm = new List<sala>();
+            List<sala> listasPar = new List<sala>();
+            foreach (var item in lista)
+            {
+                if (item.proprietario == true){
+                    sala novo = listacvin.Find(s => s.idsala == item.idSala);
+                    if (novo != null)
+                    {
+                        listasAdm.Add(novo);
+                    }
+                }
+                else{
+                    if (item.acessopermitido == true){
+                        sala novo = listacvin.Find(s => s.idsala == item.idSala);
+                        if (novo != null)
+                        {
+                            listasPar.Add(novo);
+                        }
+                    }
+                }
+            }
+            AdmSalas listasala = new AdmSalas();
+            listasala.listaAdm = listasAdm;
+            listasala.listaPar = listasPar;
             TempData["Acesso"] = ViewBag.acesso;
             return View(listasala);
         }
@@ -274,18 +346,29 @@ namespace MeuSite.Controllers
         }
 
         // GET: usuariosalas/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id, int sala)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            usuariosala usuariosala = db.usuariosala.Find(id);
-            if (usuariosala == null)
+            List<usuariosala> relacoes = db.usuariosala.ToList().FindAll(s => s.idUsuario == id);
+            if (relacoes != null)
             {
-                return HttpNotFound();
+                usuariosala solicitacao = relacoes.Find(s => s.idSala == sala);
+                if (solicitacao != null)
+                {
+                    return View(solicitacao);
+                }
+                else
+                {
+                    return RedirectToAction("Entrar", "usuarios");
+                }
             }
-            return View(usuariosala);
+            else
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
         }
 
         // POST: usuariosalas/Edit/5

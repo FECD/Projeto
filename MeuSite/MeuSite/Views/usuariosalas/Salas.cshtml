@@ -19,7 +19,7 @@
     <div class="vertucalMenu">
         <h4>Biblioteca</h4>
         <p>@Html.ActionLink("Materias da sala", "Materiais", new { id = ViewBag.id, @class = "btn" })</p>
-        <p>@Html.ActionLink("Pesquisar", "PesquisaBiblioteca", new { id = ViewBag.id, @class = "btn corBut btn-lg" })</p>
+        <p>@Html.ActionLink("Pesquisar", "PesquisaBiblioteca", new { id = ViewBag.id, @class = "btn" })</p>
     </div>
     @*@{
         int determinar = ViewBag.id;
@@ -119,7 +119,18 @@
                 }
             </tbody>
         </table>
-        <p>@Html.ActionLink("Criar Nova Tarefa", "Tarefas", new { id = Model.idSala })</p>
+        @{
+            if (ViewBag.privilegios == true)
+            {
+                <p>@Html.ActionLink("Criar Nova Tarefa", "Tarefas", new { id = Model.idSala })</p>
+                <p>@Html.ActionLink("Administração", "AdmSala", new { id = ViewBag.id, usu = ViewBag.usuario, @class = "btn corBut btn-lg" })</p>
+            }
+            else
+            {
+                <p>Apenas um participante</p>
+            }
+        }
+        
     </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MeuSite.Models.sala>
+﻿@model MeuSite.Classes.AdmSalas
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,9 +12,6 @@
 </head>
 <body>
     <div>
-        @{
-            int idusu = ViewBag.mensagem;
-        }
         <div class="vertucalMenu">
             <h4>Salas</h4>
             <p>@Html.ActionLink("Pesquisar", "Pesquisa", "salas", new { @class = "btn corBut btn-lg" })</p>
@@ -23,13 +20,13 @@
         <div class="tituloGE">Salas Gerenciadas</div>
         <div class="tabelaSala">
             <table>
-                @foreach (var item in Model)
+                @foreach (var item in Model.listaAdm)
                 {
                     <tr>
                         <td>
                             <div class="itensSala">
                                 @if (item != null) { 
-                                <p>@Html.ActionLink(@item.Nome, "Salas", new { id = item.idsala, usu = idusu, gerencia = true })</p>
+                                <p>@Html.ActionLink(@item.Nome, "Salas", new { id = item.idsala, usu = ViewBag.idusuario, gerencia = true })</p>
                                 <p>@item.Descricao</p>
                                 }
                             </div>
@@ -42,16 +39,21 @@
         <div class="tituloPA">Salas Participantes</div>
         <div class="tabelaSalaPA">
             <table>
-
+                @foreach (var item in Model.listaPar)
+                {
                 <tr>
                     <td>
                         <div class="itensSala">
-
+                            @if (item != null)
+                            {
+                                <p>@Html.ActionLink(@item.Nome, "Salas", new { id = item.idsala, usu = ViewBag.idusuario, gerencia = false })</p>
+                                <p>@item.Descricao</p>
+                            }
                         </div>
                     </td>
                     <td></td>
                 </tr>
-
+                }
             </table>
         </div>
 

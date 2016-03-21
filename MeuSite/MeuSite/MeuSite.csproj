@@ -167,6 +167,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Classes\AdmSalas.cs" />
+    <Compile Include="Classes\Membros.cs" />
     <Compile Include="Classes\TarefaChat.cs" />
     <Compile Include="Classes\salasbibliotecaEtarefas.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -377,6 +379,7 @@
     <Content Include="Views\salas\Materiais.cshtml" />
     <Content Include="Views\arquivobibliotecas\Filtrar.cshtml" />
     <Content Include="Views\arquivobibliotecas\ArquivoCond.cshtml" />
+    <Content Include="Views\usuariosalas\AdmSala.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
