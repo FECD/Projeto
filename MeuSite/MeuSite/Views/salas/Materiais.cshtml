@@ -29,11 +29,11 @@
         {
             <tr>
                 <td>
-                    @Html.Display(db.arquivobiblioteca.ToList().Find(escolha => escolha.idarquivoBiblioteca == item.idArquivobiblioteca).nome.ToString())
+                    @Html.DisplayName(db.arquivobiblioteca.ToList().Find(escolha => escolha.idarquivoBiblioteca == item.idArquivobiblioteca).nome)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.idsalabiblioteca }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.idsalabiblioteca }) |
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.idsalabiblioteca }) |*@
+                    @*@Html.ActionLink("Details", "Details", new { id = item.idsalabiblioteca }) |*@
                     @Html.ActionLink("Delete", "Delete", new { id = item.idsalabiblioteca })
                 </td>
             </tr>

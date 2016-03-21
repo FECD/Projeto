@@ -18,22 +18,36 @@ namespace MeuSite.Controllers
         // GET: usuariosalas
         public ActionResult Salas(int id, int usu, Boolean gerencia)
         {
-            ViewBag.mensagem = TempData["ID"];
-            TempData["ID"] = ViewBag.mensagem;
+            ViewBag.idusuario = TempData["ID"];
+            TempData["ID"] = ViewBag.idusuario;
+            if (ViewBag.idusuario == null)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            List<usuario> coleta = db.usuario.ToList().FindAll(item => item.idusuario == ViewBag.idusuario);
+            if (coleta == null)
+            {
+                return RedirectToAction("Index", "usuarios");
+            }
+            usuario pessoa = new usuario();
+            foreach (var item in coleta)
+            {
+                pessoa = item;
+            }
+            if (pessoa.conexao == false)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            ViewBag.Id = pessoa.idusuario;
+            TempData["ID"] = pessoa.idusuario;
+            TempData["Email"] = pessoa.email;
+            TempData["Acesso"] = pessoa.conexao;
             ViewBag.acesso = TempData["Acesso"];
             TarefaChat lista = new TarefaChat();
             List<chat> listaCH = new List<chat>();
             List<tarefa> listaTa = new List<tarefa>();
             listaCH = db.chat.ToList().FindAll(item => item.idSala == id);
             listaTa = db.tarefa.ToList().FindAll(item => item.idSala == id);
-           
-            //foreach (var item in db.chat.ToList().)
-            //{
-            //    if (item.idSala == id)
-            //    {
-            //        listaCH.Add(item);
-            //    }
-            //}
 
             lista.listatarefas = listaTa;
             lista.listachat = listaCH;
@@ -45,8 +59,30 @@ namespace MeuSite.Controllers
         }
         public ActionResult PesquisaBiblioteca(int id)
         {
-            ViewBag.mensagem = TempData["ID"];
-            TempData["ID"] = ViewBag.mensagem;
+            ViewBag.idusuario = TempData["ID"];
+            TempData["ID"] = ViewBag.idusuario;
+            if (ViewBag.idusuario == null)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            List<usuario> coleta = db.usuario.ToList().FindAll(item => item.idusuario == ViewBag.idusuario);
+            if (coleta == null)
+            {
+                return RedirectToAction("Index", "usuarios");
+            }
+            usuario pessoa = new usuario();
+            foreach (var item in coleta)
+            {
+                pessoa = item;
+            }
+            if (pessoa.conexao == false)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            ViewBag.Id = pessoa.idusuario;
+            TempData["ID"] = pessoa.idusuario;
+            TempData["Email"] = pessoa.email;
+            TempData["Acesso"] = pessoa.conexao;
             TempData["IDSALA"] = id;
             return RedirectToAction("Index", "arquivobibliotecas");
         }
@@ -140,14 +176,28 @@ namespace MeuSite.Controllers
             TempData["ID"] = pessoa.idusuario;
             TempData["Email"] = pessoa.email;
             TempData["Acesso"] = pessoa.conexao;
-            if (ViewBag.idusuario != null)
-            {
-                return RedirectToAction("Index", "salas");
-            }
-            else
-            {
-                return RedirectToAction("Entrar", "usuarios");
-            }
+            return RedirectToAction("Index", "salas");
+
+        }
+        public ActionResult Participar(int id, int iduse)
+        {
+            usuariosala novo = new usuariosala();
+            novo.idSala = id;
+            novo.idUsuario = iduse;
+            novo.acessopermitido = false;
+            novo.proprietario = false;
+            db.usuariosala.Add(novo);
+            db.SaveChanges();
+            return RedirectToAction("Index", "salas");
+
+        }
+        public ActionResult DesParticipar(int id, int iduse)
+        {
+            List<usuariosala> li = db.usuariosala.ToList().FindAll(s => s.idSala == id);
+            usuariosala obj = li.Find(s => s.idUsuario == iduse);
+            db.usuariosala.Remove(obj);
+            db.SaveChanges();
+            return RedirectToAction("Index", "salas");
 
         }
         public ActionResult Index()

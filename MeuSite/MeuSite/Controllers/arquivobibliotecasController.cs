@@ -18,10 +18,52 @@ namespace MeuSite.Controllers
         // GET: arquivobibliotecas
         public ActionResult Index()
         {
+            ViewBag.idusuario = TempData["ID"];
+            TempData["ID"] = ViewBag.idusuario;
+            if (ViewBag.idusuario == null)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            usuario pessoa = db.usuario.ToList().Find(item => item.idusuario == ViewBag.idusuario);
+            if (pessoa == null)
+            {
+                return RedirectToAction("Index", "usuarios");
+            }
+            if (pessoa.conexao == false)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            ViewBag.Id = pessoa.idusuario;
+            TempData["ID"] = pessoa.idusuario;
+            TempData["Email"] = pessoa.email;
+            TempData["Acesso"] = pessoa.conexao;
+            ViewBag.idsala = TempData["IDSALA"];
+            TempData["IDSALA"] = ViewBag.idsala;
             return View(db.temasala.ToList());
         }
         public ActionResult Filtrar(int idtemasala, string Nome)
         {
+            ViewBag.idusuario = TempData["ID"];
+            TempData["ID"] = ViewBag.idusuario;
+            if (ViewBag.idusuario == null)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            usuario pessoa = db.usuario.ToList().Find(item => item.idusuario == ViewBag.idusuario);
+            if (pessoa == null)
+            {
+                return RedirectToAction("Index", "usuarios");
+            }
+            if (pessoa.conexao == false)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            ViewBag.Id = pessoa.idusuario;
+            TempData["ID"] = pessoa.idusuario;
+            TempData["Email"] = pessoa.email;
+            TempData["Acesso"] = pessoa.conexao;
+            ViewBag.idsala = TempData["IDSALA"];
+            TempData["IDSALA"] = ViewBag.idsala;
             List<arquivobiblioteca> lista = new List<arquivobiblioteca>();
             List<arquivobiblioteca> listasFinal = new List<arquivobiblioteca>();
             if (idtemasala != 0)
@@ -52,8 +94,65 @@ namespace MeuSite.Controllers
             //List<sala> listinha = sala.FindAll(s => s.Nome =="IF");
             //return RedirectToAction("Index","salas");
         }
+        public ActionResult ArquivoCond(int id, int idsala)
+        {
+            ViewBag.idusuario = TempData["ID"];
+            TempData["ID"] = ViewBag.idusuario;
+            if (ViewBag.idusuario == null)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            usuario pessoa = db.usuario.ToList().Find(item => item.idusuario == ViewBag.idusuario);
+            if (pessoa == null)
+            {
+                return RedirectToAction("Index", "usuarios");
+            }
+            if (pessoa.conexao == false)
+            {
+                return RedirectToAction("Entrar", "usuarios");
+            }
+            ViewBag.Id = pessoa.idusuario;
+            TempData["ID"] = pessoa.idusuario;
+            TempData["Email"] = pessoa.email;
+            TempData["Acesso"] = pessoa.conexao;
+            ViewBag.Arid = id;
+            ViewBag.idsala = idsala;
+            List<salabiblioteca> lista = db.salabiblioteca.ToList().FindAll(s => s.idArquivobiblioteca == ViewBag.Arid);
+            salabiblioteca relacao = new salabiblioteca();
+            if (lista != null)
+            {
+                relacao = lista.Find(item => item.idSala == ViewBag.idsala);
+                if (relacao == null)
+                {
+                    ViewBag.resposta = "Esse arquivo não é vinculado a sua sala";
+                }
+                else
+                {
+                    ViewBag.resposta = "Esse arquivo é vinculado a sua sala";
+                }
+            }
+            return View(relacao);
+        }
+        public ActionResult Vincular(int id,int arid )
+        {
+            salabiblioteca novo = new salabiblioteca();
+            novo.idSala = id;
+            novo.idArquivobiblioteca = arid;
+            db.salabiblioteca.Add(novo);
+            db.SaveChanges();
+            return RedirectToAction("Index", "arquivobibliotecas");
+        }
+        public ActionResult DesVincular(int id, int arid)
+        {
+            List<salabiblioteca> li = db.salabiblioteca.ToList().FindAll(s => s.idSala == id);
+            salabiblioteca obj = li.Find(s => s.idArquivobiblioteca == arid);
+            db.salabiblioteca.Remove(obj);
+            db.SaveChanges();
+            return RedirectToAction("Index", "arquivobibliotecas");
 
+        }
         // GET: arquivobibliotecas/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)

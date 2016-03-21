@@ -1,0 +1,48 @@
+﻿@model MeuSite.Models.salabiblioteca
+
+@{
+    ViewBag.Title = "ArquivoCond";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ArquivoCond</h2>
+@ViewBag.resposta
+@ViewBag.idsala
+@ViewBag.Arid
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idSala)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.idArquivobiblioteca)
+        </th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => Model.idSala)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.idArquivobiblioteca)
+        </td>
+        <td>
+            @{
+                if (Model == null)
+                {
+
+                    <p>@Html.ActionLink("Vincular", "Vincular", new { id = ViewBag.idsala, arid = ViewBag.Arid })</p>
+                }
+                else
+                {
+                    <p>@Html.ActionLink("Descincular", "DesVincular", new { id = ViewBag.idsala, arid = ViewBag.Arid })</p>
+                }
+            }
+        </td>
+    </tr>
+
+
+</table>

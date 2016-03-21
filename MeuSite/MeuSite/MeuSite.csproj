@@ -375,6 +375,7 @@
     <Content Include="Views\salas\Filtrar.cshtml" />
     <Content Include="Views\salas\Materiais.cshtml" />
     <Content Include="Views\arquivobibliotecas\Filtrar.cshtml" />
+    <Content Include="Views\arquivobibliotecas\ArquivoCond.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

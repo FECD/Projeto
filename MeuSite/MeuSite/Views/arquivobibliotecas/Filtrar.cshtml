@@ -13,6 +13,7 @@
     @using MeuSite.Models;
 </head>
 <body>
+    @ViewBag.idsala
     @ViewBag.Mensagem
     @{
         edbancoEntities db = new edbancoEntities();
@@ -35,15 +36,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.nome)
+                    @Html.ActionLink(@item.nome, "ArquivoCond", new { id = item.idarquivoBiblioteca, idsala = ViewBag.idsala })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => db.temasala.ToList().Find(valor => valor.idTemaSala == item.idTemaSala).nome)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                 </td>
             </tr>
         }

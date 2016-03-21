@@ -35,11 +35,29 @@
         </td>
         <td>
             @{
-                if (Model.acessopermitido == false)
+                if (Model == null)
                 {
-                    <p>@Html.ActionLink("Solicitar Participação", "Criete", new { id= Model.idSala, iduse = ViewBag.idusuario})</p>
+                    
+                        <p>@Html.ActionLink("Solicitar Participação", "Participar", new { id = ViewBag.idsala, iduse = ViewBag.idusuario })</p>
                 }
-            }
+                else{
+                    if(Model.acessopermitido == false)
+                    {
+                    <p>@Html.ActionLink("Cancelar Solicitação", "DesParticipar", new { id = ViewBag.idsala, iduse = ViewBag.idusuario })</p>
+
+                    }
+                    else
+                    {
+                        if (Model.proprietario == false)
+                        {
+                        <p>@Html.ActionLink("Abadonar Sala", "Delete", new { id = ViewBag.idsala, iduse = ViewBag.idusuario })</p>
+                        }
+                        else{
+                        <p>Você é o dono dessa sala.</p>
+                        }
+                    }
+                }
+}
         </td>
     </tr>
 

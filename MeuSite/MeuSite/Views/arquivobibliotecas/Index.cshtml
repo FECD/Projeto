@@ -11,7 +11,7 @@
     @using MeuSite.Models;
 </head>
 <body>
-
+    @ViewBag.idsala
     @using (Html.BeginForm("Filtrar", "arquivobibliotecas", FormMethod.Post))
     {
 
@@ -51,8 +51,6 @@
             </tr>
         </table>
     }
-    <p>
-        <input type="submit" value="Restaurar" class="btn btn-default" />
-    </p>
+    
 </body>
 </html>
