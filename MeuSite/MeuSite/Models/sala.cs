@@ -14,9 +14,28 @@ namespace MeuSite.Models
     
     public partial class sala
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public sala()
+        {
+            this.chat_usuario_sala = new HashSet<chat_usuario_sala>();
+            this.tarefa = new HashSet<tarefa>();
+            this.usuariosala12 = new HashSet<usuariosala12>();
+            this.biblioteca = new HashSet<biblioteca>();
+        }
+    
         public int idsala { get; set; }
-        public int idTemaSala { get; set; }
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
+        public string nome { get; set; }
+        public string descricao { get; set; }
+        public int temasala_idtemasala { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<chat_usuario_sala> chat_usuario_sala { get; set; }
+        public virtual temasala temasala { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tarefa> tarefa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<usuariosala12> usuariosala12 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<biblioteca> biblioteca { get; set; }
     }
 }

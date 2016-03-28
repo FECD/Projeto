@@ -14,10 +14,21 @@ namespace MeuSite.Models
     
     public partial class tarefa
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tarefa()
+        {
+            this.biblioteca = new HashSet<biblioteca>();
+        }
+    
         public int idtarefa { get; set; }
-        public int idSala { get; set; }
+        public int sala_idsala { get; set; }
+        public int sala_temasala_idtemasala { get; set; }
         public string titulo { get; set; }
-        public System.DateTime dataEntrega { get; set; }
+        public string descricao { get; set; }
         public bool entregue { get; set; }
+    
+        public virtual sala sala { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<biblioteca> biblioteca { get; set; }
     }
 }

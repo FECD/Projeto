@@ -8,7 +8,7 @@ namespace MeuSite.Classes
 {
     public class Membros
     {
-        public List<usuariosala> listaPendentes { get; set; }
-        public List<usuariosala> listaPartiipantes { get; set; }
+        //public List<usuariosala> listaPendentes { get; set; }
+        //public List<usuariosala> listaPartiipantes { get; set; }
     }
 }

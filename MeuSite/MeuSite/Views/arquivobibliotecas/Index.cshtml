@@ -20,7 +20,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <table class="tabSUb">
             <tr>
-                <td>
+                @*<td>
                     <div class="form-group">
                         <div class="col-md-10 submenu">
                             Filtrar por Tema
@@ -28,13 +28,13 @@
                                 <option value=0> Todos </option>
                                 @foreach (var item in Model)
                                 {
-                                    <option value=@item.idTemaSala>@item.nome</option>
+                                    <option value=@item.idtemasala>@item.nome</option>
                                 }
                             </select>
 
                         </div>
                     </div>
-                </td>
+                </td>*@
                 <td>
                     <div class="form-group">
                         <div class="col-md-10 submenu">

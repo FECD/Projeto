@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MeuSite.Models.arquivobiblioteca>
+﻿@model IEnumerable<MeuSite.Models.biblioteca>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,11 +13,7 @@
     @using MeuSite.Models;
 </head>
 <body>
-    @ViewBag.idsala
     @ViewBag.Mensagem
-    @{
-        edbancoEntities db = new edbancoEntities();
-    }
     @*<p>
         @Html.ActionLink("Create New", "Create")
     </p>*@
@@ -36,10 +32,10 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(@item.nome, "ArquivoCond", new { id = item.idarquivoBiblioteca, idsala = ViewBag.idsala })
+                    @Html.ActionLink(@item.nome, "ArquivoCond", new { id = item.idbiblioteca, idsala = ViewBag.idsala })
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => db.temasala.ToList().Find(valor => valor.idTemaSala == item.idTemaSala).nome)
+                    @Html.DisplayFor(modelItem => item.temasala.nome)
                 </td>
             </tr>
         }

@@ -9,7 +9,7 @@ namespace MeuSite.Controllers
 {
     public class HomeController : Controller
     {
-        edbancoEntities db = new edbancoEntities();
+        private bancofcEntities db = new bancofcEntities();
         public ActionResult Sair()
         {
             return RedirectToAction("Sair", "usuarios");
@@ -50,22 +50,16 @@ namespace MeuSite.Controllers
         {
             if (TempData["Email"] == null)
             {
-                return RedirectToAction("Entrar", "usuarios");
+                return RedirectToAction("Entrar");
             }
-            usuario pessoa = new usuario();
-            foreach (var item in db.usuario.ToList())
-            {
-                if (item.email == TempData["Email"].ToString())
-                {
-                    pessoa = item;
-                }
-            }
+            usuario pessoa = db.usuario.ToList().Find(s => s.email == TempData["Email"].ToString());
             if (pessoa.conexao == false)
             {
-                return RedirectToAction("Entrar", "usuarios");
+                return RedirectToAction("Entrar");
             }
             TempData["ID"] = pessoa.idusuario;
-            TempData["Email"] = pessoa.email; 
+            TempData["Email"] = pessoa.email;
+            TempData["Acesso"] = pessoa.conexao;
             return RedirectToAction("SuasSalas", "usuariosalas");
         }
 

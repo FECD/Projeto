@@ -1,4 +1,4 @@
-﻿@model MeuSite.Models.salabiblioteca
+﻿@model MeuSite.Models.biblioteca
 
 @{
     ViewBag.Title = "ArquivoCond";
@@ -15,19 +15,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.idSala)
+            @Html.DisplayNameFor(model => model.nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.idArquivobiblioteca)
+            @Html.DisplayNameFor(model => model.temasala.nome)
         </th>
         <th></th>
     </tr>
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => Model.idSala)
+            @Html.DisplayFor(modelItem => Model.nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => Model.idArquivobiblioteca)
+            @Html.DisplayFor(modelItem => Model.temasala.nome)
         </td>
         <td>
             @{

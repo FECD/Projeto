@@ -14,15 +14,15 @@
 <body>
     @ViewBag.resposta
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Voltar", "Index")
     </p>
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayNameFor(model => model.nome)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Descricao)
+                @Html.DisplayNameFor(model => model.descricao)
             </th>
             <th></th>
         </tr>
@@ -30,10 +30,10 @@
     @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Nome)
+                @Html.DisplayFor(modelItem => item.nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
+                @Html.DisplayFor(modelItem => item.descricao)
             </td>
             <td>
                 @Html.ActionLink("Ver", "vercadastro", new { id=item.idsala })

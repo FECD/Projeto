@@ -1,16 +1,15 @@
 ﻿.chat {
-    position:absolute;
-    top: 40%;
-    left: 60%;
-    width: 24%;
-    height: 40%;
+    position: relative;
+    left: 3%;
+    width: 82%;
+    height: 60%;
     background-color:green; 
     overflow:scroll; 
     overflow-x:hidden;
 }
-.campoDig{
+/*.campoDig{
         position: absolute;
         top: 80%;
         left: 60%;
-}
+}*/
 

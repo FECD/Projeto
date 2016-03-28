@@ -1,5 +1,5 @@
-﻿@model MeuSite.Classes.salasbibliotecaEtarefas
-
+﻿@*@model  IEnumerable<MeuSite.Models.biblioteca>*@
+@model MeuSite.Models.sala
 @{
     ViewBag.Title = "Materiais";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,37 +10,35 @@
     @using MeuSite.Models;
 </head>
 <body>
+    
     <h2>Materiais</h2>
-    @{
-        edbancoEntities db = new edbancoEntities();
-    }
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
 
     <table>
-        <tr>
-            <th>
-                @Html.DisplayName("Nome do arquivo")
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayName("Nome do arquivo")
+        </th>
+        <th>
+            @Html.DisplayName("Opções")
+        </th>
+    </tr>
 
-        @foreach (var item in Model.listaSalasBiblioteca)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayName(db.arquivobiblioteca.ToList().Find(escolha => escolha.idarquivoBiblioteca == item.idArquivobiblioteca).nome)
-                </td>
-                <td>
-                    @Html.ActionLink("Baixar", "Download", new { id = item.idArquivobiblioteca }) |
-                    @*@Html.ActionLink("Details", "Details", new { id = item.idsalabiblioteca }) |*@
-                    @Html.ActionLink("Desvincular", "DesVincular", new { id = ViewBag.id, idar = item.idArquivobiblioteca })
-                </td>
-            </tr>
+    @foreach (var item in Model.biblioteca.ToList())
+    {
+
+                <tr>
+                    <td>
+                        @item.nome
+                    </td>
+                    <td>
+                        @Html.ActionLink("Baixar", "Download", new { id = item.idbiblioteca }) |
+                        @Html.ActionLink("Desvincular", "DesVincular", new { id = ViewBag.id, idar = item.idbiblioteca })
+                    </td>
+                </tr>
+        
         }
-
-    </table>
+</table>
+            
     <table>
         <tr>
             <th>
@@ -49,20 +47,23 @@
             <th></th>
         </tr>
         
-        @foreach (var item in Model.listaArquivoTarefa)
+        @foreach (var item in Model.tarefa.ToList())
         {
-            <tr>
-                <td>
-                    item.idArquivoBiblioteca
-                    @Html.Display(db.arquivobiblioteca.ToList().Find(escolha => escolha.idarquivoBiblioteca == item.idArquivoBiblioteca).nome.ToString())
-                </td>
-                <td>
-                    
-                    @*@Html.ActionLink("Delete", "Delete", new { id = item.idsalabiblioteca })*@
-                </td>
-            </tr>
+            foreach (var itemsobre in item.biblioteca.ToList())
+            {
+
+                <tr>
+                    <td>
+                        @itemsobre.nome
+                    </td>
+                    <td>
+                        @Html.ActionLink("Baixar", "Download", new { id = itemsobre.idbiblioteca }) |
+                    </td>
+                </tr>
+
+            }
         }
-        
+            
 
     </table>
 </body>

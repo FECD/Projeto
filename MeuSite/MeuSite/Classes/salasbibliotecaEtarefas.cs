@@ -8,7 +8,7 @@ namespace MeuSite.Classes
 {
     public class salasbibliotecaEtarefas
     {
-        public List<salabiblioteca> listaSalasBiblioteca { get; set;}
-        public List<arquivotarefa> listaArquivoTarefa { get; set; }
+        //public List<salabiblioteca> listaSalasBiblioteca { get; set;}
+        //public List<arquivotarefa> listaArquivoTarefa { get; set; }
     }
 }

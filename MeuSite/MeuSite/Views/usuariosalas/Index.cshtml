@@ -1,19 +1,17 @@
-﻿@model MeuSite.Models.usuariosala
+﻿@model MeuSite.Models.usuariosala12
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Participação</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<hr />
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.idSala)
+            @Html.DisplayNameFor(model => model.sala_idsala)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.proprietario)
@@ -25,7 +23,7 @@
     </tr>
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => Model.idSala)
+            @Html.DisplayFor(modelItem => Model.sala_idsala)
         </td>
         <td>
             @Html.DisplayFor(modelItem => Model.proprietario)

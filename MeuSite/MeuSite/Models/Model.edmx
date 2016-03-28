@@ -4,70 +4,86 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="edbancoModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="arquivobiblioteca">
+      <Schema Namespace="bancofcModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="biblioteca">
           <Key>
-            <PropertyRef Name="idarquivoBiblioteca" />
-            <PropertyRef Name="idTemaSala" />
+            <PropertyRef Name="idbiblioteca" />
+            <PropertyRef Name="temasala_idtemasala" />
           </Key>
-          <Property Name="idarquivoBiblioteca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idTemaSala" Type="int" Nullable="false" />
+          <Property Name="idbiblioteca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="caminho" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="nome" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="conteudo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="temasala_idtemasala" Type="int" Nullable="false" />
           <Property Name="privacidade" Type="bool" Nullable="false" />
         </EntityType>
-        <EntityType Name="arquivotarefa">
+        <EntityType Name="chat_usuario_sala">
           <Key>
-            <PropertyRef Name="idArquivoTarefa" />
+            <PropertyRef Name="usuario_idusuario" />
+            <PropertyRef Name="sala_idsala" />
+            <PropertyRef Name="sala_temasala_idtemasala" />
+            <PropertyRef Name="chat_usuario_salacol" />
           </Key>
-          <Property Name="idArquivoTarefa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idArquivoBiblioteca" Type="int" Nullable="false" />
-          <Property Name="idTarefa" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="chat">
-          <Key>
-            <PropertyRef Name="idChat" />
-          </Key>
-          <Property Name="idChat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idSala" Type="int" Nullable="false" />
-          <Property Name="idUsuario" Type="int" Nullable="false" />
+          <Property Name="usuario_idusuario" Type="int" Nullable="false" />
+          <Property Name="sala_idsala" Type="int" Nullable="false" />
+          <Property Name="sala_temasala_idtemasala" Type="int" Nullable="false" />
+          <Property Name="mensagem" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="numero" Type="int" Nullable="false" />
-          <Property Name="mensagem" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="chat_usuario_salacol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="sala">
           <Key>
             <PropertyRef Name="idsala" />
-            <PropertyRef Name="idTemaSala" />
+            <PropertyRef Name="temasala_idtemasala" />
           </Key>
           <Property Name="idsala" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idTemaSala" Type="int" Nullable="false" />
-          <Property Name="Nome" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="Descricao" Type="varchar" MaxLength="45" />
+          <Property Name="nome" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="45" />
+          <Property Name="temasala_idtemasala" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="salabiblioteca">
+        <EntityType Name="sala_has_biblioteca">
           <Key>
-            <PropertyRef Name="idsalabiblioteca" />
+            <PropertyRef Name="sala_idsala" />
+            <PropertyRef Name="sala_temasala_idtemasala" />
+            <PropertyRef Name="biblioteca_idbiblioteca" />
+            <PropertyRef Name="biblioteca_temasala_idtemasala" />
           </Key>
-          <Property Name="idsalabiblioteca" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idSala" Type="int" Nullable="false" />
-          <Property Name="idArquivobiblioteca" Type="int" Nullable="false" />
+          <Property Name="sala_idsala" Type="int" Nullable="false" />
+          <Property Name="sala_temasala_idtemasala" Type="int" Nullable="false" />
+          <Property Name="biblioteca_idbiblioteca" Type="int" Nullable="false" />
+          <Property Name="biblioteca_temasala_idtemasala" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tarefa">
           <Key>
             <PropertyRef Name="idtarefa" />
-            <PropertyRef Name="idSala" />
+            <PropertyRef Name="sala_idsala" />
+            <PropertyRef Name="sala_temasala_idtemasala" />
           </Key>
           <Property Name="idtarefa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idSala" Type="int" Nullable="false" />
+          <Property Name="sala_idsala" Type="int" Nullable="false" />
+          <Property Name="sala_temasala_idtemasala" Type="int" Nullable="false" />
           <Property Name="titulo" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="dataEntrega" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="entregue" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tarefa_has_biblioteca">
+          <Key>
+            <PropertyRef Name="tarefa_idtarefa" />
+            <PropertyRef Name="tarefa_sala_idsala" />
+            <PropertyRef Name="tarefa_sala_temasala_idtemasala" />
+            <PropertyRef Name="biblioteca_idbiblioteca" />
+            <PropertyRef Name="biblioteca_temasala_idtemasala" />
+          </Key>
+          <Property Name="tarefa_idtarefa" Type="int" Nullable="false" />
+          <Property Name="tarefa_sala_idsala" Type="int" Nullable="false" />
+          <Property Name="tarefa_sala_temasala_idtemasala" Type="int" Nullable="false" />
+          <Property Name="biblioteca_idbiblioteca" Type="int" Nullable="false" />
+          <Property Name="biblioteca_temasala_idtemasala" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="temasala">
           <Key>
-            <PropertyRef Name="idTemaSala" />
+            <PropertyRef Name="idtemasala" />
           </Key>
-          <Property Name="idTemaSala" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idtemasala" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nome" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
         <EntityType Name="usuario">
@@ -80,96 +96,294 @@
           <Property Name="senha" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="conexao" Type="bool" Nullable="false" />
         </EntityType>
-        <EntityType Name="usuariosala">
+        <EntityType Name="usuariosala12">
           <Key>
-            <PropertyRef Name="idSala" />
-            <PropertyRef Name="idUsuario" />
+            <PropertyRef Name="usuario_idusuario" />
+            <PropertyRef Name="sala_idsala" />
+            <PropertyRef Name="sala_temasala_idtemasala" />
           </Key>
-          <Property Name="idSala" Type="int" Nullable="false" />
-          <Property Name="idUsuario" Type="int" Nullable="false" />
-          <Property Name="proprietario" Type="bool" Nullable="false" />
+          <Property Name="usuario_idusuario" Type="int" Nullable="false" />
+          <Property Name="sala_idsala" Type="int" Nullable="false" />
+          <Property Name="sala_temasala_idtemasala" Type="int" Nullable="false" />
           <Property Name="acessopermitido" Type="bool" Nullable="false" />
+          <Property Name="proprietario" Type="bool" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="edbancoModelStoreContainer">
-          <EntitySet Name="arquivobiblioteca" EntityType="Self.arquivobiblioteca" Schema="edbanco" store:Type="Tables" />
-          <EntitySet Name="arquivotarefa" EntityType="Self.arquivotarefa" Schema="edbanco" store:Type="Tables" />
-          <EntitySet Name="chat" EntityType="Self.chat" Schema="edbanco" store:Type="Tables" />
-          <EntitySet Name="sala" EntityType="Self.sala" Schema="edbanco" store:Type="Tables" />
-          <EntitySet Name="salabiblioteca" EntityType="Self.salabiblioteca" Schema="edbanco" store:Type="Tables" />
-          <EntitySet Name="tarefa" EntityType="Self.tarefa" Schema="edbanco" store:Type="Tables" />
-          <EntitySet Name="temasala" EntityType="Self.temasala" Schema="edbanco" store:Type="Tables" />
-          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="edbanco" store:Type="Tables" />
-          <EntitySet Name="usuariosala" EntityType="Self.usuariosala" Schema="edbanco" store:Type="Tables" />
+        <Association Name="fk_biblioteca_temasala1">
+          <End Role="temasala" Type="Self.temasala" Multiplicity="1" />
+          <End Role="biblioteca" Type="Self.biblioteca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="temasala">
+              <PropertyRef Name="idtemasala" />
+            </Principal>
+            <Dependent Role="biblioteca">
+              <PropertyRef Name="temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sala_has_biblioteca_biblioteca1">
+          <End Role="biblioteca" Type="Self.biblioteca" Multiplicity="1" />
+          <End Role="sala_has_biblioteca" Type="Self.sala_has_biblioteca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="biblioteca">
+              <PropertyRef Name="idbiblioteca" />
+              <PropertyRef Name="temasala_idtemasala" />
+            </Principal>
+            <Dependent Role="sala_has_biblioteca">
+              <PropertyRef Name="biblioteca_idbiblioteca" />
+              <PropertyRef Name="biblioteca_temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sala_has_biblioteca_sala1">
+          <End Role="sala" Type="Self.sala" Multiplicity="1" />
+          <End Role="sala_has_biblioteca" Type="Self.sala_has_biblioteca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sala">
+              <PropertyRef Name="idsala" />
+              <PropertyRef Name="temasala_idtemasala" />
+            </Principal>
+            <Dependent Role="sala_has_biblioteca">
+              <PropertyRef Name="sala_idsala" />
+              <PropertyRef Name="sala_temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sala_temasala1">
+          <End Role="temasala" Type="Self.temasala" Multiplicity="1" />
+          <End Role="sala" Type="Self.sala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="temasala">
+              <PropertyRef Name="idtemasala" />
+            </Principal>
+            <Dependent Role="sala">
+              <PropertyRef Name="temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tarefa_has_biblioteca_biblioteca1">
+          <End Role="biblioteca" Type="Self.biblioteca" Multiplicity="1" />
+          <End Role="tarefa_has_biblioteca" Type="Self.tarefa_has_biblioteca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="biblioteca">
+              <PropertyRef Name="idbiblioteca" />
+              <PropertyRef Name="temasala_idtemasala" />
+            </Principal>
+            <Dependent Role="tarefa_has_biblioteca">
+              <PropertyRef Name="biblioteca_idbiblioteca" />
+              <PropertyRef Name="biblioteca_temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tarefa_has_biblioteca_tarefa1">
+          <End Role="tarefa" Type="Self.tarefa" Multiplicity="1" />
+          <End Role="tarefa_has_biblioteca" Type="Self.tarefa_has_biblioteca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tarefa">
+              <PropertyRef Name="idtarefa" />
+              <PropertyRef Name="sala_idsala" />
+              <PropertyRef Name="sala_temasala_idtemasala" />
+            </Principal>
+            <Dependent Role="tarefa_has_biblioteca">
+              <PropertyRef Name="tarefa_idtarefa" />
+              <PropertyRef Name="tarefa_sala_idsala" />
+              <PropertyRef Name="tarefa_sala_temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tarefa_sala1">
+          <End Role="sala" Type="Self.sala" Multiplicity="1" />
+          <End Role="tarefa" Type="Self.tarefa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sala">
+              <PropertyRef Name="idsala" />
+              <PropertyRef Name="temasala_idtemasala" />
+            </Principal>
+            <Dependent Role="tarefa">
+              <PropertyRef Name="sala_idsala" />
+              <PropertyRef Name="sala_temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_has_sala_sala1">
+          <End Role="sala" Type="Self.sala" Multiplicity="1" />
+          <End Role="usuariosala12" Type="Self.usuariosala12" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sala">
+              <PropertyRef Name="idsala" />
+              <PropertyRef Name="temasala_idtemasala" />
+            </Principal>
+            <Dependent Role="usuariosala12">
+              <PropertyRef Name="sala_idsala" />
+              <PropertyRef Name="sala_temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_has_sala_sala2">
+          <End Role="sala" Type="Self.sala" Multiplicity="1" />
+          <End Role="chat_usuario_sala" Type="Self.chat_usuario_sala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sala">
+              <PropertyRef Name="idsala" />
+              <PropertyRef Name="temasala_idtemasala" />
+            </Principal>
+            <Dependent Role="chat_usuario_sala">
+              <PropertyRef Name="sala_idsala" />
+              <PropertyRef Name="sala_temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_has_sala_usuario1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="usuariosala12" Type="Self.usuariosala12" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="usuariosala12">
+              <PropertyRef Name="usuario_idusuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_has_sala_usuario2">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="chat_usuario_sala" Type="Self.chat_usuario_sala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="chat_usuario_sala">
+              <PropertyRef Name="usuario_idusuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bancofcModelStoreContainer">
+          <EntitySet Name="biblioteca" EntityType="Self.biblioteca" Schema="bancofc" store:Type="Tables" />
+          <EntitySet Name="chat_usuario_sala" EntityType="Self.chat_usuario_sala" Schema="bancofc" store:Type="Tables" />
+          <EntitySet Name="sala" EntityType="Self.sala" Schema="bancofc" store:Type="Tables" />
+          <EntitySet Name="sala_has_biblioteca" EntityType="Self.sala_has_biblioteca" Schema="bancofc" store:Type="Tables" />
+          <EntitySet Name="tarefa" EntityType="Self.tarefa" Schema="bancofc" store:Type="Tables" />
+          <EntitySet Name="tarefa_has_biblioteca" EntityType="Self.tarefa_has_biblioteca" Schema="bancofc" store:Type="Tables" />
+          <EntitySet Name="temasala" EntityType="Self.temasala" Schema="bancofc" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="bancofc" store:Type="Tables" />
+          <EntitySet Name="usuariosala12" EntityType="Self.usuariosala12" Schema="bancofc" store:Type="Tables" />
+          <AssociationSet Name="fk_biblioteca_temasala1" Association="Self.fk_biblioteca_temasala1">
+            <End Role="temasala" EntitySet="temasala" />
+            <End Role="biblioteca" EntitySet="biblioteca" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sala_has_biblioteca_biblioteca1" Association="Self.fk_sala_has_biblioteca_biblioteca1">
+            <End Role="biblioteca" EntitySet="biblioteca" />
+            <End Role="sala_has_biblioteca" EntitySet="sala_has_biblioteca" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sala_has_biblioteca_sala1" Association="Self.fk_sala_has_biblioteca_sala1">
+            <End Role="sala" EntitySet="sala" />
+            <End Role="sala_has_biblioteca" EntitySet="sala_has_biblioteca" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sala_temasala1" Association="Self.fk_sala_temasala1">
+            <End Role="temasala" EntitySet="temasala" />
+            <End Role="sala" EntitySet="sala" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tarefa_has_biblioteca_biblioteca1" Association="Self.fk_tarefa_has_biblioteca_biblioteca1">
+            <End Role="biblioteca" EntitySet="biblioteca" />
+            <End Role="tarefa_has_biblioteca" EntitySet="tarefa_has_biblioteca" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tarefa_has_biblioteca_tarefa1" Association="Self.fk_tarefa_has_biblioteca_tarefa1">
+            <End Role="tarefa" EntitySet="tarefa" />
+            <End Role="tarefa_has_biblioteca" EntitySet="tarefa_has_biblioteca" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tarefa_sala1" Association="Self.fk_tarefa_sala1">
+            <End Role="sala" EntitySet="sala" />
+            <End Role="tarefa" EntitySet="tarefa" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_has_sala_sala1" Association="Self.fk_usuario_has_sala_sala1">
+            <End Role="sala" EntitySet="sala" />
+            <End Role="usuariosala12" EntitySet="usuariosala12" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_has_sala_sala2" Association="Self.fk_usuario_has_sala_sala2">
+            <End Role="sala" EntitySet="sala" />
+            <End Role="chat_usuario_sala" EntitySet="chat_usuario_sala" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_has_sala_usuario1" Association="Self.fk_usuario_has_sala_usuario1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="usuariosala12" EntitySet="usuariosala12" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_has_sala_usuario2" Association="Self.fk_usuario_has_sala_usuario2">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="chat_usuario_sala" EntitySet="chat_usuario_sala" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="edbancoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="arquivobiblioteca">
+      <Schema Namespace="bancofcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="biblioteca">
           <Key>
-            <PropertyRef Name="idarquivoBiblioteca" />
-            <PropertyRef Name="idTemaSala" />
+            <PropertyRef Name="idbiblioteca" />
+            <PropertyRef Name="temasala_idtemasala" />
           </Key>
-          <Property Name="idarquivoBiblioteca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idTemaSala" Type="Int32" Nullable="false" />
+          <Property Name="idbiblioteca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="caminho" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="conteudo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="temasala_idtemasala" Type="Int32" Nullable="false" />
           <Property Name="privacidade" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="temasala" Relationship="Self.fk_biblioteca_temasala1" FromRole="biblioteca" ToRole="temasala" />
+          <NavigationProperty Name="sala" Relationship="Self.sala_has_biblioteca" FromRole="biblioteca" ToRole="sala" />
+          <NavigationProperty Name="tarefa" Relationship="Self.tarefa_has_biblioteca" FromRole="biblioteca" ToRole="tarefa" />
         </EntityType>
-        <EntityType Name="arquivotarefa">
+        <EntityType Name="chat_usuario_sala">
           <Key>
-            <PropertyRef Name="idArquivoTarefa" />
+            <PropertyRef Name="usuario_idusuario" />
+            <PropertyRef Name="sala_idsala" />
+            <PropertyRef Name="sala_temasala_idtemasala" />
+            <PropertyRef Name="chat_usuario_salacol" />
           </Key>
-          <Property Name="idArquivoTarefa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idArquivoBiblioteca" Type="Int32" Nullable="false" />
-          <Property Name="idTarefa" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="chat">
-          <Key>
-            <PropertyRef Name="idChat" />
-          </Key>
-          <Property Name="idChat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idSala" Type="Int32" Nullable="false" />
-          <Property Name="idUsuario" Type="Int32" Nullable="false" />
+          <Property Name="usuario_idusuario" Type="Int32" Nullable="false" />
+          <Property Name="sala_idsala" Type="Int32" Nullable="false" />
+          <Property Name="sala_temasala_idtemasala" Type="Int32" Nullable="false" />
+          <Property Name="mensagem" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="numero" Type="Int32" Nullable="false" />
-          <Property Name="mensagem" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="chat_usuario_salacol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="sala" Relationship="Self.fk_usuario_has_sala_sala2" FromRole="chat_usuario_sala" ToRole="sala" />
+          <NavigationProperty Name="usuario" Relationship="Self.fk_usuario_has_sala_usuario2" FromRole="chat_usuario_sala" ToRole="usuario" />
         </EntityType>
         <EntityType Name="sala">
           <Key>
             <PropertyRef Name="idsala" />
-            <PropertyRef Name="idTemaSala" />
+            <PropertyRef Name="temasala_idtemasala" />
           </Key>
           <Property Name="idsala" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idTemaSala" Type="Int32" Nullable="false" />
-          <Property Name="Nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Descricao" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="salabiblioteca">
-          <Key>
-            <PropertyRef Name="idsalabiblioteca" />
-          </Key>
-          <Property Name="idsalabiblioteca" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idSala" Type="Int32" Nullable="false" />
-          <Property Name="idArquivobiblioteca" Type="Int32" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descricao" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="temasala_idtemasala" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="chat_usuario_sala" Relationship="Self.fk_usuario_has_sala_sala2" FromRole="sala" ToRole="chat_usuario_sala" />
+          <NavigationProperty Name="temasala" Relationship="Self.fk_sala_temasala1" FromRole="sala" ToRole="temasala" />
+          <NavigationProperty Name="tarefa" Relationship="Self.fk_tarefa_sala1" FromRole="sala" ToRole="tarefa" />
+          <NavigationProperty Name="usuariosala12" Relationship="Self.fk_usuario_has_sala_sala1" FromRole="sala" ToRole="usuariosala12" />
+          <NavigationProperty Name="biblioteca" Relationship="Self.sala_has_biblioteca" FromRole="sala" ToRole="biblioteca" />
         </EntityType>
         <EntityType Name="tarefa">
           <Key>
             <PropertyRef Name="idtarefa" />
-            <PropertyRef Name="idSala" />
+            <PropertyRef Name="sala_idsala" />
+            <PropertyRef Name="sala_temasala_idtemasala" />
           </Key>
           <Property Name="idtarefa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idSala" Type="Int32" Nullable="false" />
+          <Property Name="sala_idsala" Type="Int32" Nullable="false" />
+          <Property Name="sala_temasala_idtemasala" Type="Int32" Nullable="false" />
           <Property Name="titulo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="dataEntrega" Type="DateTime" Nullable="false" />
+          <Property Name="descricao" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="entregue" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="sala" Relationship="Self.fk_tarefa_sala1" FromRole="tarefa" ToRole="sala" />
+          <NavigationProperty Name="biblioteca" Relationship="Self.tarefa_has_biblioteca" FromRole="tarefa" ToRole="biblioteca" />
         </EntityType>
         <EntityType Name="temasala">
           <Key>
-            <PropertyRef Name="idTemaSala" />
+            <PropertyRef Name="idtemasala" />
           </Key>
-          <Property Name="idTemaSala" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idtemasala" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nome" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="biblioteca" Relationship="Self.fk_biblioteca_temasala1" FromRole="temasala" ToRole="biblioteca" />
+          <NavigationProperty Name="sala" Relationship="Self.fk_sala_temasala1" FromRole="temasala" ToRole="sala" />
         </EntityType>
         <EntityType Name="usuario">
           <Key>
@@ -180,105 +394,227 @@
           <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="senha" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="conexao" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="chat_usuario_sala" Relationship="Self.fk_usuario_has_sala_usuario2" FromRole="usuario" ToRole="chat_usuario_sala" />
+          <NavigationProperty Name="usuariosala12" Relationship="Self.fk_usuario_has_sala_usuario1" FromRole="usuario" ToRole="usuariosala12" />
         </EntityType>
-        <EntityType Name="usuariosala">
+        <EntityType Name="usuariosala12">
           <Key>
-            <PropertyRef Name="idSala" />
-            <PropertyRef Name="idUsuario" />
+            <PropertyRef Name="usuario_idusuario" />
+            <PropertyRef Name="sala_idsala" />
+            <PropertyRef Name="sala_temasala_idtemasala" />
           </Key>
-          <Property Name="idSala" Type="Int32" Nullable="false" />
-          <Property Name="idUsuario" Type="Int32" Nullable="false" />
-          <Property Name="proprietario" Type="Boolean" Nullable="false" />
+          <Property Name="usuario_idusuario" Type="Int32" Nullable="false" />
+          <Property Name="sala_idsala" Type="Int32" Nullable="false" />
+          <Property Name="sala_temasala_idtemasala" Type="Int32" Nullable="false" />
           <Property Name="acessopermitido" Type="Boolean" Nullable="false" />
+          <Property Name="proprietario" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="sala" Relationship="Self.fk_usuario_has_sala_sala1" FromRole="usuariosala12" ToRole="sala" />
+          <NavigationProperty Name="usuario" Relationship="Self.fk_usuario_has_sala_usuario1" FromRole="usuariosala12" ToRole="usuario" />
         </EntityType>
-        <EntityContainer Name="edbancoEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="arquivobiblioteca" EntityType="Self.arquivobiblioteca" />
-          <EntitySet Name="arquivotarefa" EntityType="Self.arquivotarefa" />
-          <EntitySet Name="chat" EntityType="Self.chat" />
+        <Association Name="fk_biblioteca_temasala1">
+          <End Role="temasala" Type="Self.temasala" Multiplicity="1" />
+          <End Role="biblioteca" Type="Self.biblioteca" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="temasala">
+              <PropertyRef Name="idtemasala" />
+            </Principal>
+            <Dependent Role="biblioteca">
+              <PropertyRef Name="temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_has_sala_sala2">
+          <End Role="sala" Type="Self.sala" Multiplicity="1" />
+          <End Role="chat_usuario_sala" Type="Self.chat_usuario_sala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sala">
+              <PropertyRef Name="idsala" />
+              <PropertyRef Name="temasala_idtemasala" />
+            </Principal>
+            <Dependent Role="chat_usuario_sala">
+              <PropertyRef Name="sala_idsala" />
+              <PropertyRef Name="sala_temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_has_sala_usuario2">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="chat_usuario_sala" Type="Self.chat_usuario_sala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="chat_usuario_sala">
+              <PropertyRef Name="usuario_idusuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_sala_temasala1">
+          <End Role="temasala" Type="Self.temasala" Multiplicity="1" />
+          <End Role="sala" Type="Self.sala" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="temasala">
+              <PropertyRef Name="idtemasala" />
+            </Principal>
+            <Dependent Role="sala">
+              <PropertyRef Name="temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_tarefa_sala1">
+          <End Role="sala" Type="Self.sala" Multiplicity="1" />
+          <End Role="tarefa" Type="Self.tarefa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sala">
+              <PropertyRef Name="idsala" />
+              <PropertyRef Name="temasala_idtemasala" />
+            </Principal>
+            <Dependent Role="tarefa">
+              <PropertyRef Name="sala_idsala" />
+              <PropertyRef Name="sala_temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_has_sala_sala1">
+          <End Role="sala" Type="Self.sala" Multiplicity="1" />
+          <End Role="usuariosala12" Type="Self.usuariosala12" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sala">
+              <PropertyRef Name="idsala" />
+              <PropertyRef Name="temasala_idtemasala" />
+            </Principal>
+            <Dependent Role="usuariosala12">
+              <PropertyRef Name="sala_idsala" />
+              <PropertyRef Name="sala_temasala_idtemasala" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuario_has_sala_usuario1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="usuariosala12" Type="Self.usuariosala12" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="idusuario" />
+            </Principal>
+            <Dependent Role="usuariosala12">
+              <PropertyRef Name="usuario_idusuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sala_has_biblioteca">
+          <End Role="biblioteca" Type="Self.biblioteca" Multiplicity="*" />
+          <End Role="sala" Type="Self.sala" Multiplicity="*" />
+        </Association>
+        <Association Name="tarefa_has_biblioteca">
+          <End Role="biblioteca" Type="Self.biblioteca" Multiplicity="*" />
+          <End Role="tarefa" Type="Self.tarefa" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="bancofcEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="biblioteca" EntityType="Self.biblioteca" />
+          <EntitySet Name="chat_usuario_sala" EntityType="Self.chat_usuario_sala" />
           <EntitySet Name="sala" EntityType="Self.sala" />
-          <EntitySet Name="salabiblioteca" EntityType="Self.salabiblioteca" />
           <EntitySet Name="tarefa" EntityType="Self.tarefa" />
           <EntitySet Name="temasala" EntityType="Self.temasala" />
           <EntitySet Name="usuario" EntityType="Self.usuario" />
-          <EntitySet Name="usuariosala" EntityType="Self.usuariosala" />
+          <EntitySet Name="usuariosala12" EntityType="Self.usuariosala12" />
+          <AssociationSet Name="fk_biblioteca_temasala1" Association="Self.fk_biblioteca_temasala1">
+            <End Role="temasala" EntitySet="temasala" />
+            <End Role="biblioteca" EntitySet="biblioteca" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_has_sala_sala2" Association="Self.fk_usuario_has_sala_sala2">
+            <End Role="sala" EntitySet="sala" />
+            <End Role="chat_usuario_sala" EntitySet="chat_usuario_sala" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_has_sala_usuario2" Association="Self.fk_usuario_has_sala_usuario2">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="chat_usuario_sala" EntitySet="chat_usuario_sala" />
+          </AssociationSet>
+          <AssociationSet Name="fk_sala_temasala1" Association="Self.fk_sala_temasala1">
+            <End Role="temasala" EntitySet="temasala" />
+            <End Role="sala" EntitySet="sala" />
+          </AssociationSet>
+          <AssociationSet Name="fk_tarefa_sala1" Association="Self.fk_tarefa_sala1">
+            <End Role="sala" EntitySet="sala" />
+            <End Role="tarefa" EntitySet="tarefa" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_has_sala_sala1" Association="Self.fk_usuario_has_sala_sala1">
+            <End Role="sala" EntitySet="sala" />
+            <End Role="usuariosala12" EntitySet="usuariosala12" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuario_has_sala_usuario1" Association="Self.fk_usuario_has_sala_usuario1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="usuariosala12" EntitySet="usuariosala12" />
+          </AssociationSet>
+          <AssociationSet Name="sala_has_biblioteca" Association="Self.sala_has_biblioteca">
+            <End Role="biblioteca" EntitySet="biblioteca" />
+            <End Role="sala" EntitySet="sala" />
+          </AssociationSet>
+          <AssociationSet Name="tarefa_has_biblioteca" Association="Self.tarefa_has_biblioteca">
+            <End Role="biblioteca" EntitySet="biblioteca" />
+            <End Role="tarefa" EntitySet="tarefa" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="edbancoModelStoreContainer" CdmEntityContainer="edbancoEntities">
-          <EntitySetMapping Name="arquivobiblioteca">
-            <EntityTypeMapping TypeName="edbancoModel.arquivobiblioteca">
-              <MappingFragment StoreEntitySet="arquivobiblioteca">
-                <ScalarProperty Name="idarquivoBiblioteca" ColumnName="idarquivoBiblioteca" />
-                <ScalarProperty Name="idTemaSala" ColumnName="idTemaSala" />
+        <EntityContainerMapping StorageEntityContainer="bancofcModelStoreContainer" CdmEntityContainer="bancofcEntities">
+          <EntitySetMapping Name="biblioteca">
+            <EntityTypeMapping TypeName="bancofcModel.biblioteca">
+              <MappingFragment StoreEntitySet="biblioteca">
+                <ScalarProperty Name="idbiblioteca" ColumnName="idbiblioteca" />
+                <ScalarProperty Name="caminho" ColumnName="caminho" />
                 <ScalarProperty Name="nome" ColumnName="nome" />
-                <ScalarProperty Name="conteudo" ColumnName="conteudo" />
+                <ScalarProperty Name="temasala_idtemasala" ColumnName="temasala_idtemasala" />
                 <ScalarProperty Name="privacidade" ColumnName="privacidade" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="arquivotarefa">
-            <EntityTypeMapping TypeName="edbancoModel.arquivotarefa">
-              <MappingFragment StoreEntitySet="arquivotarefa">
-                <ScalarProperty Name="idArquivoTarefa" ColumnName="idArquivoTarefa" />
-                <ScalarProperty Name="idArquivoBiblioteca" ColumnName="idArquivoBiblioteca" />
-                <ScalarProperty Name="idTarefa" ColumnName="idTarefa" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="chat">
-            <EntityTypeMapping TypeName="edbancoModel.chat">
-              <MappingFragment StoreEntitySet="chat">
-                <ScalarProperty Name="idChat" ColumnName="idChat" />
-                <ScalarProperty Name="idSala" ColumnName="idSala" />
-                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
-                <ScalarProperty Name="numero" ColumnName="numero" />
+          <EntitySetMapping Name="chat_usuario_sala">
+            <EntityTypeMapping TypeName="bancofcModel.chat_usuario_sala">
+              <MappingFragment StoreEntitySet="chat_usuario_sala">
+                <ScalarProperty Name="usuario_idusuario" ColumnName="usuario_idusuario" />
+                <ScalarProperty Name="sala_idsala" ColumnName="sala_idsala" />
+                <ScalarProperty Name="sala_temasala_idtemasala" ColumnName="sala_temasala_idtemasala" />
                 <ScalarProperty Name="mensagem" ColumnName="mensagem" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="chat_usuario_salacol" ColumnName="chat_usuario_salacol" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sala">
-            <EntityTypeMapping TypeName="edbancoModel.sala">
+            <EntityTypeMapping TypeName="bancofcModel.sala">
               <MappingFragment StoreEntitySet="sala">
                 <ScalarProperty Name="idsala" ColumnName="idsala" />
-                <ScalarProperty Name="idTemaSala" ColumnName="idTemaSala" />
-                <ScalarProperty Name="Nome" ColumnName="Nome" />
-                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="salabiblioteca">
-            <EntityTypeMapping TypeName="edbancoModel.salabiblioteca">
-              <MappingFragment StoreEntitySet="salabiblioteca">
-                <ScalarProperty Name="idsalabiblioteca" ColumnName="idsalabiblioteca" />
-                <ScalarProperty Name="idSala" ColumnName="idSala" />
-                <ScalarProperty Name="idArquivobiblioteca" ColumnName="idArquivobiblioteca" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="temasala_idtemasala" ColumnName="temasala_idtemasala" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tarefa">
-            <EntityTypeMapping TypeName="edbancoModel.tarefa">
+            <EntityTypeMapping TypeName="bancofcModel.tarefa">
               <MappingFragment StoreEntitySet="tarefa">
                 <ScalarProperty Name="idtarefa" ColumnName="idtarefa" />
-                <ScalarProperty Name="idSala" ColumnName="idSala" />
+                <ScalarProperty Name="sala_idsala" ColumnName="sala_idsala" />
+                <ScalarProperty Name="sala_temasala_idtemasala" ColumnName="sala_temasala_idtemasala" />
                 <ScalarProperty Name="titulo" ColumnName="titulo" />
-                <ScalarProperty Name="dataEntrega" ColumnName="dataEntrega" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
                 <ScalarProperty Name="entregue" ColumnName="entregue" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="temasala">
-            <EntityTypeMapping TypeName="edbancoModel.temasala">
+            <EntityTypeMapping TypeName="bancofcModel.temasala">
               <MappingFragment StoreEntitySet="temasala">
-                <ScalarProperty Name="idTemaSala" ColumnName="idTemaSala" />
+                <ScalarProperty Name="idtemasala" ColumnName="idtemasala" />
                 <ScalarProperty Name="nome" ColumnName="nome" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="usuario">
-            <EntityTypeMapping TypeName="edbancoModel.usuario">
+            <EntityTypeMapping TypeName="bancofcModel.usuario">
               <MappingFragment StoreEntitySet="usuario">
                 <ScalarProperty Name="idusuario" ColumnName="idusuario" />
                 <ScalarProperty Name="nome" ColumnName="nome" />
@@ -288,16 +624,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="usuariosala">
-            <EntityTypeMapping TypeName="edbancoModel.usuariosala">
-              <MappingFragment StoreEntitySet="usuariosala">
-                <ScalarProperty Name="idSala" ColumnName="idSala" />
-                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
-                <ScalarProperty Name="proprietario" ColumnName="proprietario" />
+          <EntitySetMapping Name="usuariosala12">
+            <EntityTypeMapping TypeName="bancofcModel.usuariosala12">
+              <MappingFragment StoreEntitySet="usuariosala12">
+                <ScalarProperty Name="usuario_idusuario" ColumnName="usuario_idusuario" />
+                <ScalarProperty Name="sala_idsala" ColumnName="sala_idsala" />
+                <ScalarProperty Name="sala_temasala_idtemasala" ColumnName="sala_temasala_idtemasala" />
                 <ScalarProperty Name="acessopermitido" ColumnName="acessopermitido" />
+                <ScalarProperty Name="proprietario" ColumnName="proprietario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="sala_has_biblioteca" TypeName="bancofcModel.sala_has_biblioteca" StoreEntitySet="sala_has_biblioteca">
+            <EndProperty Name="biblioteca">
+              <ScalarProperty Name="idbiblioteca" ColumnName="biblioteca_idbiblioteca" />
+              <ScalarProperty Name="temasala_idtemasala" ColumnName="biblioteca_temasala_idtemasala" />
+            </EndProperty>
+            <EndProperty Name="sala">
+              <ScalarProperty Name="idsala" ColumnName="sala_idsala" />
+              <ScalarProperty Name="temasala_idtemasala" ColumnName="sala_temasala_idtemasala" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="tarefa_has_biblioteca" TypeName="bancofcModel.tarefa_has_biblioteca" StoreEntitySet="tarefa_has_biblioteca">
+            <EndProperty Name="biblioteca">
+              <ScalarProperty Name="idbiblioteca" ColumnName="biblioteca_idbiblioteca" />
+              <ScalarProperty Name="temasala_idtemasala" ColumnName="biblioteca_temasala_idtemasala" />
+            </EndProperty>
+            <EndProperty Name="tarefa">
+              <ScalarProperty Name="idtarefa" ColumnName="tarefa_idtarefa" />
+              <ScalarProperty Name="sala_idsala" ColumnName="tarefa_sala_idsala" />
+              <ScalarProperty Name="sala_temasala_idtemasala" ColumnName="tarefa_sala_temasala_idtemasala" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

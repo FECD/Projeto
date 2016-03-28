@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -187,13 +188,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\arquivobiblioteca.cs">
+    <Compile Include="Models\biblioteca.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\arquivotarefa.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\chat.cs">
+    <Compile Include="Models\chat_usuario_sala.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -213,10 +211,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\sala.cs">
-      <DependentUpon>Model.tt</DependentUpon>
+    <Compile Include="Models\Model6.cs" />
+    <Compile Include="Models\Model6.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model6.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\salabiblioteca.cs">
+    <Compile Include="Models\sala.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tarefa.cs">
@@ -228,7 +229,7 @@
     <Compile Include="Models\usuario.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\usuariosala.cs">
+    <Compile Include="Models\usuariosala12.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -241,6 +242,7 @@
     <Content Include="Css\Index.css" />
     <Content Include="Css\Layout.css" />
     <Content Include="Css\PesquisaSalas.css" />
+    <Content Include="Css\Salas.css" />
     <Content Include="Css\SuasSalas.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -263,6 +265,13 @@
     <Content Include="Imagens\хор-1132x509.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\Model6.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model6.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model6.edmx.diagram">
+      <DependentUpon>Model6.edmx</DependentUpon>
+    </Content>
     <EntityDeploy Include="Models\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
@@ -282,6 +291,7 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chat.js" />
+    <Content Include="Scripts\coleta.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -380,6 +390,14 @@
     <Content Include="Views\arquivobibliotecas\Filtrar.cshtml" />
     <Content Include="Views\arquivobibliotecas\ArquivoCond.cshtml" />
     <Content Include="Views\usuariosalas\AdmSala.cshtml" />
+    <Content Include="Views\usuariosalas\obj.cshtml" />
+    <Content Include="Views\salas1\Create.cshtml" />
+    <Content Include="Views\salas1\Delete.cshtml" />
+    <Content Include="Views\salas1\Details.cshtml" />
+    <Content Include="Views\salas1\Edit.cshtml" />
+    <Content Include="Views\salas1\Index.cshtml" />
+    <Content Include="Views\salas\View.cshtml" />
+    <Content Include="Views\usuariosalas\Salas - Copy %282%29.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

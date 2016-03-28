@@ -4,16 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="38370d3a1ebd4a5497a1984243da35d3" Name="Diagram1">
-        <EntityTypeShape EntityType="edbancoModel.arquivobiblioteca" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="edbancoModel.arquivotarefa" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="edbancoModel.chat" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="edbancoModel.sala" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="edbancoModel.salabiblioteca" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="edbancoModel.tarefa" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="edbancoModel.temasala" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="edbancoModel.usuario" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="edbancoModel.usuariosala" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+      <Diagram DiagramId="1eab90b667004b09941ea549cea7d226" Name="Diagram1">
+        <EntityTypeShape EntityType="bancofcModel.biblioteca" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="bancofcModel.chat_usuario_sala" Width="1.5" PointX="7.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="bancofcModel.sala" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bancofcModel.tarefa" Width="1.5" PointX="10.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="bancofcModel.temasala" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="bancofcModel.usuario" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="bancofcModel.usuariosala12" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="bancofcModel.fk_biblioteca_temasala1" ManuallyRouted="false" />
+        <AssociationConnector Association="bancofcModel.fk_usuario_has_sala_sala2" ManuallyRouted="false" />
+        <AssociationConnector Association="bancofcModel.fk_usuario_has_sala_usuario2" ManuallyRouted="false" />
+        <AssociationConnector Association="bancofcModel.fk_sala_temasala1" ManuallyRouted="false" />
+        <AssociationConnector Association="bancofcModel.fk_tarefa_sala1" ManuallyRouted="false" />
+        <AssociationConnector Association="bancofcModel.fk_usuario_has_sala_sala1" ManuallyRouted="false" />
+        <AssociationConnector Association="bancofcModel.fk_usuario_has_sala_usuario1" ManuallyRouted="false" />
+        <AssociationConnector Association="bancofcModel.sala_has_biblioteca" ManuallyRouted="false" />
+        <AssociationConnector Association="bancofcModel.tarefa_has_biblioteca" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

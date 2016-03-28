@@ -14,7 +14,19 @@ namespace MeuSite.Models
     
     public partial class temasala
     {
-        public int idTemaSala { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public temasala()
+        {
+            this.biblioteca = new HashSet<biblioteca>();
+            this.sala = new HashSet<sala>();
+        }
+    
+        public int idtemasala { get; set; }
         public string nome { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<biblioteca> biblioteca { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<sala> sala { get; set; }
     }
 }

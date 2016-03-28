@@ -13,10 +13,10 @@ namespace MeuSite.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class edbancoEntities : DbContext
+    public partial class bancofcEntities : DbContext
     {
-        public edbancoEntities()
-            : base("name=edbancoEntities")
+        public bancofcEntities()
+            : base("name=bancofcEntities")
         {
         }
     
@@ -25,14 +25,12 @@ namespace MeuSite.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<arquivobiblioteca> arquivobiblioteca { get; set; }
-        public virtual DbSet<arquivotarefa> arquivotarefa { get; set; }
-        public virtual DbSet<chat> chat { get; set; }
+        public virtual DbSet<biblioteca> biblioteca { get; set; }
+        public virtual DbSet<chat_usuario_sala> chat_usuario_sala { get; set; }
         public virtual DbSet<sala> sala { get; set; }
-        public virtual DbSet<salabiblioteca> salabiblioteca { get; set; }
         public virtual DbSet<tarefa> tarefa { get; set; }
         public virtual DbSet<temasala> temasala { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
-        public virtual DbSet<usuariosala> usuariosala { get; set; }
+        public virtual DbSet<usuariosala12> usuariosala12 { get; set; }
     }
 }

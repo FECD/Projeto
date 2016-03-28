@@ -1,4 +1,4 @@
-﻿@model MeuSite.Classes.TarefaChat
+﻿@model MeuSite.Models.sala
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,118 +11,194 @@
     <meta name="viewport" content="width=device-width" />
     <title>Salas</title>
     <link href="~/Css/Chat.css" rel="stylesheet" />
+    <link href="~/Css/Salas.css" rel="stylesheet" />
+    <link href="~/Css/SuasSalas.css" rel="stylesheet" />
+    <script src="~/Scripts/coleta.js"></script>
     @using MeuSite.Models;    
     @using MeuSite.Controllers;
     <script src="~/Scripts/Chat.js"></script>
 </head>
 <body>
-    <div class="vertucalMenu">
-        <h4>Biblioteca</h4>
-        <p>@Html.ActionLink("Materias da sala", "Materiais", new { id = ViewBag.id, @class = "btn" })</p>
-        <p>@Html.ActionLink("Pesquisar", "PesquisaBiblioteca", new { id = ViewBag.id, @class = "btn" })</p>
-    </div>
-    @*@{
-        int determinar = ViewBag.id;
-        edbancoEntities db = new edbancoEntities();
-        List<chat> numeroch = new List<chat>();
-        var nu = 0;
-        var comprimento = 0;
-        var lisMensagens = "";
-        foreach (var item in db.chat.ToList())
-        {
-             if (item.idSala == determinar){
-                 <script>var nk = @item.numero;
-                     alert(nk)</script>
-                if (numeroch == null) { 
-                foreach (var numeros in numeroch)
+    <div class="coluna1">
+        <h4 style="text-align:center">Biblioteca</h4>
+        <p>
+            @using (Html.BeginForm("Filtrar", "arquivobibliotecas", FormMethod.Post))
+            {
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+                <div class="form-group">
+                    <div class="col-md-10 submenu">
+                        Nome
+                        <input type="text" name="Nome" class="alert-danger" />
+                    </div>
+                </div>
+
+
+                <div class="tabSUb">
+                    <input type="submit" value="Pesquisar" class="btn btn-default ex" />
+                </div>
+
+            }
+        </p>
+        <p>
+            <hr />
+            <h4> Arquivos das suas tarefas </h4>
+            <div class="arquivos">
+            <table>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Nome do arquivo")
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.tarefa.ToList())
                 {
-                    if (item.numero != numeros.numero){
-                        numeroch.Add(item);
-                        lisMensagens += item.idSala + "|" + item.idUsuario + "|" + item.numero + "|" + item.mensagem + "|";
-                        comprimento += 1;
+                    foreach (var itemsobre in item.biblioteca.ToList())
+                    {
+
+                        <tr>
+                            <td>
+                            @itemsobre.nome
+                        </td>
+                        <td>
+                            @Html.ActionLink("Baixar", "Download", new { id = itemsobre.idbiblioteca })
+                        </td>
+                    </tr>
+
                     }
                 }
-                }
-                else
-                {
-                    numeroch.Add(item);
-                    lisMensagens += item.idSala + "|" + item.idUsuario + "|" + item.numero + "|" + item.mensagem + "|";
-                    comprimento += 1;
-                }
-            }
-        }
-        foreach (var item in lisMensagens)
-        {
-            nu += 1;
- 
-        }
-        <script>var objetoCH = '@lisMensagens';
-            list = 0;
-    </script>
-    }*@
-    <div>
-        
-        <div id="chat" class="chat" onmousemove="atualizarcon()">
 
-        </div>
-        <div>
-            <div class="campoDig">
-                <form>
-                    <button onclick='alert("Atualizando")'>Atualizar</button>
-                    <input type="text" name="mensagem">
-                    @*@{
-                        var valor = nu + 1;
-                        var novo = ViewBag.id + "|" + ViewBag.usuario + "|" + valor + "|";
-                        <script>
-                            var obH = '@novo';
-                            var escritos = 0;
-                        </script>
-                    }*@
-                    <button onclick='alert(mensagem.value)'>Enviar</button>
-                </form>
+
+            </table>
             </div>
-        </div>
+            <hr />
+            <h4> Arquivos vinculados </h4>
+            <div class="arquivos">
+                <table>
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Nome do arquivo")
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model.biblioteca.ToList())
+                    {
+
+                        <tr>
+                            <td>
+                                @item.nome
+                            </td>
+                            <td>
+                                @Html.ActionLink("Baixar", "Download", new { id = item.idbiblioteca })
+                                @Html.ActionLink("Desvincular", "DesVincular", "arquivobibliotecas", new { id = ViewBag.id, idar = item.idbiblioteca })
+                            </td>
+                        </tr>
+
+                    }
+                </table>
+
+            </div>
+            </p>
+    
+    <hr />
+    <p>@Html.ActionLink("Todos os Materias da sala", "Materiais", new { id = ViewBag.id, @class = "btn" })</p>
     </div>
-    <button onclick='alert("ok")'>Teste</button>
-    <table>
-        <tbody>
-            <tr>
-                <th>
-                    Titulo
-                </th>
-                <td>
-                    fim
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div>
-        @ViewBag.id
+    <div class="coluna2">
+        @ViewBag.Ent
+        @using (Html.BeginForm("Confi", "usuariosalas", FormMethod.Post))
+        {
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="tabtarefas">
         <table>
             <tbody>
-                @foreach (var tarefa in Model.listatarefas.ToList())
+                <tr>
+                    <th>
+                        Titulo
+                    </th>
+                    <th>
+                        Descrição
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                @{
+            if (Model.tarefa != null)
+            {
+                foreach (var tarefa in Model.tarefa)
                 {
                     <tr>
                         <td>
                             @tarefa.titulo
                         </td>
                         <td>
-                            @tarefa.dataEntrega
+                            @tarefa.descricao
                         </td>
                         <td>
-                            @tarefa.entregue
+                            <div>
+                                <div>
+                                    <div>
+                                        @Html.DisplayFor(modelItem => tarefa.entregue)
+                                    </div>
+                                </div>
+
+                            </div>
                         </td>
                         <td>
-                            <p>@Html.ActionLink("Enviar Tarefa", "Arquivos", new { id = Model.idSala })</p>
+                            @{
+                    if (tarefa.entregue == false)
+                    {
+                        <p>@Html.ActionLink("Enviar Tarefa", "Arquivos", new { id = Model.idsala, tare = tarefa.idtarefa })</p>
+                    }
+                    else
+                    {
+                        <p>Tarefa concluida</p>
+                    }
+                            }
+                        </td>
+                        <td>
+                            @{
+                    if (ViewBag.privilegios == true)
+                    {
+                        if (tarefa.entregue == false)
+                        {
+                            <p>@Html.ActionLink("Finalizar", "Confi", new { id = tarefa.idtarefa, entrega = true, idsa = ViewBag.id, usu = ViewBag.usuario })</p>
+                        }
+                        else
+                        {
+                            <p>@Html.ActionLink("Retomar", "Confi", new { id = tarefa.idtarefa, entrega = false, idsa = ViewBag.id, usu = ViewBag.usuario })</p>
+                        }
+                    }
+
+                            }
+
                         </td>
                     </tr>
                 }
+            }
+                }
+
+
             </tbody>
         </table>
+    </div>
+        }
         @{
             if (ViewBag.privilegios == true)
             {
-                <p>@Html.ActionLink("Criar Nova Tarefa", "Tarefas", new { id = Model.idSala })</p>
+                <p>@Html.ActionLink("Criar Nova Tarefa", "Tarefas", new { id = Model.idsala })</p>
                 <p>@Html.ActionLink("Administração", "AdmSala", new { id = ViewBag.id, usu = ViewBag.usuario, @class = "btn corBut btn-lg" })</p>
             }
             else
@@ -130,7 +206,51 @@
                 <p>Apenas um participante</p>
             }
         }
-        
+
     </div>
+    <div class="coluna3">
+@using (Html.BeginForm("Mensagem", "usuariosalas", FormMethod.Post))
+        {
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="conter">
+        <div>
+            <div class="tabelaSalaPAch">
+                <table>
+                    <tbody>
+                        @foreach (var coisas in Model.chat_usuario_sala.ToList())
+                        {
+                            <tr>
+                                <td>
+                                    >|@coisas.usuario.nome|<
+                                </td>
+                                <td>
+                                    @coisas.mensagem
+                                </td>
+                            </tr>
+                        }
+                    <tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+        <hr />
+            <div>
+                <div>
+                    
+                    <div class="tabSUb tk">
+                        <input type="text" name="mensagem" id="mensagem" />
+                        <input type="submit" value="Enviar" class="btn btn-defaul" />
+                        <button onclick='alert("Atualizando")'>Atualizar</button>
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+    
 </body>
+
+
+
 </html>

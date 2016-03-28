@@ -1,87 +1,109 @@
-﻿@model MeuSite.Classes.Membros
+﻿@model IEnumerable<MeuSite.Models.usuariosala12>
 
 @{
-    ViewBag.Title = "AdmSala";
+    ViewBag.Title = "Administração";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Css/SuasSalas.css" rel="stylesheet" />
+</head>
+<body>
+    <h2 style="text-align:center">Area de administração</h2>
 
-<h2>AdmSala</h2>
+    <p>
+        @Html.ActionLink("Voltar", "Salas", new { id = ViewBag.id, usu = ViewBag.idusuario, gerencia = true })
+    </p>
+    <div class="tituloGE">Membros Participantes</div>
+    <div class="tabelaSala">
+        <table>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayName("Nome")
-        </th>
-        <th>
-            @Html.DisplayName("Email")
-        </th>
-        <th>
-            @Html.DisplayName("Condição")
-        </th>
-        <th></th>
-    </tr>
+            @foreach (var item in Model)
+            {
+                if (item.proprietario == false)
+                {
+                    if (item.acessopermitido == true)
+                    {
 
-@foreach (var item in Model.listaPartiipantes) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.idUsuario)
-        </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.senha)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.conexao)
-        </td>*@
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.idUsuario, sala = ViewBag.id }) |
-            @*@Html.ActionLink("Details", "Details", new { id=item.idusuario }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idusuario })*@
-        </td>
-    </tr>
-}
+                        <tr>
+                            <td>
+                                <div class="itensSala">
+                                    @if (item != null)
+                                    {
+                                        <p>@Html.DisplayFor(modelItem => item.usuario.nome)</p>
+                                        <p>@Html.DisplayFor(modelItem => item.usuario.email)</p>
+                                        <p>@Html.ActionLink("Expulsar", "AdmSolicitacao", new { id = item.usuario_idusuario, sala = ViewBag.id, permi = false, user = ViewBag.idusuario })</p>
+                                    }
+                                </div>
+                                @*@Html.DisplayFor(modelItem => item.usuario.nome)*@
+                            </td>
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.usuario.email)
+                                </td>*@
+                            @*<td>
+                                    @Html.DisplayFor(modelItem => item.senha)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.conexao)
+                                </td>*@
+                            @*<td>
+                                    @Html.ActionLink("Expulsar", "AdmSolicitacao", new { id = item.usuario_idusuario, sala = ViewBag.id, permi = false, user = ViewBag.idusuario })
+                                    @Html.ActionLink("Details", "Details", new { id=item.idusuario }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id=item.idusuario })
+                                @*</td>*@
+                        </tr>
 
-</table>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayName("Nome")
-        </th>
-        <th>
-            @Html.DisplayName("Email")
-        </th>
-        <th>
-            @Html.DisplayName("Condição")
-        </th>
-        <th></th>
-    </tr>
+                    }
+                }
+            }
 
-    @foreach (var item in Model.listaPendentes)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.idUsuario)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.senha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.conexao)
-                </td>*@
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.idUsuario, sala = ViewBag.id }) |
-                @*@Html.ActionLink("Details", "Details", new { id=item.idusuario }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.idusuario })*@
-            </td>
-        </tr>
-    }
 
-</table>
+        </table>
+        </div>
+        <div class="tituloPA">Solicitações de Participação</div>
+    <div class="tabelaSalaPA">
+        <table>
+
+            @foreach (var item in Model)
+            {
+                if (item.acessopermitido == false)
+                {
+
+
+                    <tr>
+                        <td>
+                            <div class="itensSala">
+                                @if (item != null)
+                                {
+                                    <p>@Html.DisplayFor(modelItem => item.usuario.nome)</p>
+                                    <p>@Html.DisplayFor(modelItem => item.usuario.email)</p>
+                                    <p>@Html.ActionLink("Aceitar Participação", "AdmSolicitacao", new { id = item.usuario_idusuario, sala = ViewBag.id, permi = true, user = ViewBag.idusuario })</p>
+                                }
+                            </div>
+
+                            @*@Html.DisplayFor(modelItem => item.usuario.nome)*@
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.usuario.email)
+                            </td>*@
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.senha)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.conexao)
+                            </td>*@
+                        @*<td>*@
+                        @*@Html.ActionLink("Aceitar Participação", "AdmSolicitacao", new { id = item.usuario_idusuario, sala = ViewBag.id, permi = true, user = ViewBag.idusuario })*@
+                        @*@Html.ActionLink("Details", "Details", new { id=item.idusuario }) |
+                            @Html.ActionLink("Delete", "Delete", new { id=item.idusuario })*@
+                        @*</td>*@
+                    </tr>
+                }
+            }
+
+        </table>
+    </div>
+</body>
+</html>

@@ -12,7 +12,7 @@ namespace MeuSite.Controllers
 {
     public class usuariosController : Controller
     {
-        private edbancoEntities db = new edbancoEntities();
+        private bancofcEntities db = new bancofcEntities();
 
 
         public ActionResult Entrar()
@@ -24,37 +24,28 @@ namespace MeuSite.Controllers
         {
             usuario useencontrado = db.usuario.ToList().Find(s => s.email == usuario.email);
             if (useencontrado != null)
-            {
+            {   
                 if (useencontrado.senha == usuario.senha)
                 {
                     usuario novo = useencontrado;
                     novo.conexao = true;
-                    db.Entry(novo).State = EntityState.Modified;
+                    db.Entry(novo).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     TempData["Email"] = novo.email;
                     return RedirectToAction("Index", "Home");
                 }
+                else
+                {
+                    ViewBag.aviso = "Senha não corresponde ao email";
+                    return View();
+                }
             }
             else{
-                return RedirectToAction("Entrar", "usuarios");
+                ViewBag.aviso = "Email invalido";
+                return View();
             }
-            //foreach (var item in )
-            //{
-            //    if (item.email == usuario.email)
-            //    {
-            //        if (item.senha == usuario.senha)
-            //        {
-            //            usuario novo = item;
-            //            novo.conexao = true;
-            //            db.Entry(novo).State = EntityState.Modified;
-            //            db.SaveChanges();
-            //            TempData["Email"] = item.email;
-            //            return RedirectToAction("Index", "Home");
-            //        }
-            //    }
-            //}
 
-            return View();
+            
         }
         public ActionResult Sair()
         {
@@ -64,7 +55,7 @@ namespace MeuSite.Controllers
             if (atual != null)
             {
                 atual.conexao = false;
-                db.Entry(atual).State = EntityState.Modified;
+                db.Entry(atual).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Entrar", "usuarios");
             }
@@ -80,14 +71,7 @@ namespace MeuSite.Controllers
             {
                 return RedirectToAction("Entrar");
             }
-            usuario pessoa = new usuario();
-            foreach (var item in db.usuario.ToList())
-            {
-                if (item.email == TempData["Email"].ToString())
-                {
-                    pessoa = item;
-                }
-            }
+            usuario pessoa = db.usuario.ToList().Find(s => s.email == TempData["Email"].ToString());
             if (pessoa.conexao == false)
             {
                 return RedirectToAction("Entrar");
@@ -175,7 +159,7 @@ namespace MeuSite.Controllers
             if (ModelState.IsValid)
             {
                 usuario.conexao = true;
-                db.Entry(usuario).State = EntityState.Modified;
+                db.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Perfil", "usuarios");
             }

@@ -3,9 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FEDC - @ViewBag.Title</title>
+    <title>FECD - @ViewBag.Title</title>
     <link href="~/Css/Layout.css" rel="stylesheet" />
     <link href="~/Css/Index.css" rel="stylesheet" />
+    <link href="~/Css/Chat.css" rel="stylesheet" />
+    <link href="~/Css/SuasSalas.css" rel="stylesheet" />
+    <link href="~/Css/Salas.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -18,9 +21,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("ED", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @ViewBag.mensagem
-                @ViewBag.idusuario
+                @Html.ActionLink("FECD", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -32,8 +33,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Criar", "Create", "salas")</li>
-                    @*<li>@Html.ActionLink("Suas salas", "SuasSalas", "usuariosalas")</li>*@
+                    @if (ViewBag.sala_destino != null)
+                    {
+                        string nome = ViewBag.sala_destino;
+                        <li>@Html.ActionLink(nome, "Sala", "usuariosalas", new { id = ViewBag.id, usu = ViewBag.usuario, gerencia = ViewBag.privilegios })</li>
+                    }
                 </ul>
 
             </div>

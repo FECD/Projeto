@@ -24,7 +24,9 @@
         <th>
             @Html.DisplayNameFor(model => model.conexao)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuariosala)
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -41,6 +43,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.conexao)
         </td>
+    @foreach (var nitem in item.usuariosala.ToList())
+    {
+        <td>
+            @Html.DisplayFor(modelItem => nitem.idSala)
+        </td>
+    }
+        
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.idusuario }) |
             @Html.ActionLink("Details", "Details", new { id=item.idusuario }) |

@@ -8,8 +8,8 @@ namespace MeuSite.Classes
 {
     public class TarefaChat
     {
-        public int idSala { get; set; }
-        public List<chat> listachat { get; set; }
-        public List<tarefa> listatarefas { get; set; }
+        //public int idSala { get; set; }
+        //public List<chat_usuario_sala> listachat { get; set; }
+        //public List<tarefa> listatarefas { get; set; }
     }
 }

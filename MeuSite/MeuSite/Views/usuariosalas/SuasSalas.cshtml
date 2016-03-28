@@ -1,4 +1,4 @@
-﻿@model MeuSite.Classes.AdmSalas
+﻿@model IEnumerable<MeuSite.Models.usuariosala12>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,39 +20,48 @@
         <div class="tituloGE">Salas Gerenciadas</div>
         <div class="tabelaSala">
             <table>
-                @foreach (var item in Model.listaAdm)
+                @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            <div class="itensSala">
-                                @if (item != null) { 
-                                <p>@Html.ActionLink(@item.Nome, "Salas", new { id = item.idsala, usu = ViewBag.idusuario, gerencia = true })</p>
-                                <p>@item.Descricao</p>
-                                }
-                            </div>
-                        </td>
-                        <td></td>
-                    </tr>
+                    if (item.proprietario == true)
+                    {
+                        <tr>
+                            <td>
+                                <div class="itensSala">
+                                    @if (item != null)
+                                    {
+                                        <p>@Html.ActionLink(@item.sala.nome, "Salas", new { id = item.sala_idsala, usu = ViewBag.idusuario, gerencia = true })</p>
+                                        <p>@item.sala.descricao</p>
+                                    }
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
                 }
             </table>
         </div>
         <div class="tituloPA">Salas Participantes</div>
         <div class="tabelaSalaPA">
             <table>
-                @foreach (var item in Model.listaPar)
+                @foreach (var item in Model)
                 {
-                <tr>
-                    <td>
-                        <div class="itensSala">
-                            @if (item != null)
-                            {
-                                <p>@Html.ActionLink(@item.Nome, "Salas", new { id = item.idsala, usu = ViewBag.idusuario, gerencia = false })</p>
-                                <p>@item.Descricao</p>
-                            }
-                        </div>
-                    </td>
-                    <td></td>
-                </tr>
+                    if (item.proprietario == false) {
+                        if (item.acessopermitido == true)
+                        {                        
+                            <tr>
+                                <td>
+                                    <div class="itensSala">
+                                    @if (item != null)
+                                    {
+                                        <p>@Html.ActionLink(@item.sala.nome, "Salas", new { id = item.sala_idsala, usu = ViewBag.idusuario, gerencia = false })</p>
+                                      <p>@item.sala.descricao</p>
+                                    }
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        }
+                    }
                 }
             </table>
         </div>
